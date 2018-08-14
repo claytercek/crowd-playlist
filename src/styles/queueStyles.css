@@ -1,0 +1,71 @@
+.Queue ul {
+	margin: 0;
+	list-style-type: none;
+	padding-left: 0;
+}
+
+.Queue li,
+.lable {
+	display: flex;
+	margin: 0;
+	font-family: sans-serif;
+	padding: 0.6rem;
+	border-bottom: 1px solid #ddd;
+}
+
+p {
+	display: block;
+	margin: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-right: 1rem;
+}
+
+.title {
+	width: 40%;
+	flex-grow: 1;
+}
+
+.artist,
+.album {
+	width: 25%;
+}
+
+.length {
+	width: 3.5rem;
+	text-align: right;
+	align-self: flex-end;
+	padding-right: 0;
+}
+
+.lable {
+	font-weight: bold;
+}
+
+@media (max-width: 600px) {
+	.Queue .lable {
+		display: none;
+	}
+
+	.Queue li {
+		/* border-bottom: none !important; */
+		flex-direction: column;
+	}
+
+	.Queue .length,
+	.Queue .album {
+		display: none;
+	}
+
+	.Queue .title {
+		width: 100%;
+		font-size: 1rem;
+	}
+	.Queue .artist {
+		width: 100%;
+		font-size: 0.9rem;
+		margin-top: 0.1rem;
+		opacity: 0.6;
+	}
+}

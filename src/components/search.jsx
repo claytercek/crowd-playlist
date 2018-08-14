@@ -1,0 +1,74 @@
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { fetchSearch, resetSearch } from "../actions/searchActions";
+import { queueTrack } from "../actions/queueActions";
+
+class SearchResults extends Component {
+	render() {
+		const { results, focusItem } = this.props;
+		return (
+			<ul>
+				{results.map((result, index) => {
+					const isFocused = focusItem === index;
+					const className = isFocused ? "focused" : "";
+					return (
+						<li key={result.id} className={className} onClick={() => this.props.onSelect(result.id)}>
+							{result.name} - {result.artists[0].name}
+						</li>
+					);
+				})}
+			</ul>
+		);
+	}
+}
+
+class Search extends Component {
+	state = {
+		text: this.props.text || "",
+		focus: -1
+	};
+
+	selectElement = id => {
+		console.log(id);
+		this.props.queueTrack(id);
+		this.props.resetSearch();
+	};
+
+	handleTextChange = e => {
+		const text = e.target.value;
+		this.setState({ text: text });
+
+		if (text === "") {
+			this.setState({ focus: -1 });
+			this.props.resetSearch();
+		} else {
+			this.props.searchTracks(text);
+		}
+	};
+
+	render() {
+		const results = this.props.search.results;
+		return (
+			<div className="search">
+				<input onChange={this.handleTextChange} />
+				{results && <SearchResults results={results} onSelect={this.selectElement} focus={this.state.focus} />}
+			</div>
+		);
+	}
+}
+
+const mapDispatchToProps = dispatch => ({
+	// queueTrack: text => dispatch(queueTrack(text)),
+	searchTracks: query => dispatch(fetchSearch(query)),
+	resetSearch: () => dispatch(resetSearch()),
+	queueTrack: id => dispatch(queueTrack(id))
+});
+
+const mapStateToProps = state => ({
+	search: state.search
+});
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Search);
