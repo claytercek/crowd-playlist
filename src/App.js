@@ -2,37 +2,30 @@ import React, { Component } from "react";
 import Queue from "./components/queue";
 import NowPlaying from "./components/nowPlaying";
 import Search from "./components/search";
+import Connect from "./components/connect";
 import "./styles/AppStyles.css";
 
 class App extends Component {
-	render() {
-		var items = [
-			{
-				title: "Name One",
-				artist: "Artist One",
-				album: "Album One",
-				length: "2:00"
-			},
-			{
-				title: "Name Two",
-				artist: "Artist Two",
-				album: "Album Two",
-				length: "2:00"
-			},
-			{
-				title: "Name Three",
-				artist: "Artist Three",
-				album: "Album Three",
-				length: "2:00"
-			},
-			{
-				title: "Name Four",
-				artist: "Artist Four",
-				album: "Album Four",
-				length: "2:00"
-			}
-		];
+	constructor() {
+		super();
+		const params = this.getHashParams();
+		console.log(params);
+	}
 
+	getHashParams() {
+		var hashParams = {};
+		var e,
+			r = /([^&;=]+)=?([^&;]*)/g,
+			q = window.location.hash.substring(1);
+		e = r.exec(q);
+		while (e) {
+			hashParams[e[1]] = decodeURIComponent(e[2]);
+			e = r.exec(q);
+		}
+		return hashParams;
+	}
+
+	render() {
 		var nowPlaying = {
 			track: {
 				title: "Song Title",
@@ -46,9 +39,10 @@ class App extends Component {
 
 		return (
 			<div>
+				<Connect />
 				<Search />
 				<NowPlaying track={nowPlaying.track} user={nowPlaying.user} />
-				<Queue items={items} />
+				<Queue />
 			</div>
 		);
 	}

@@ -2,8 +2,7 @@ const Router = require("express").Router;
 var SpotifyWebApi = require("spotify-web-api-node");
 const AppConfig = require("../src/config/app");
 const AuthConfig = require("../src/config/auth");
-
-var state = "some-state-of-my-choice";
+var querystring = require("querystring");
 
 var spotifyApi = new SpotifyWebApi({
 	clientId: AuthConfig.CLIENT_ID,
@@ -11,12 +10,27 @@ var spotifyApi = new SpotifyWebApi({
 	redirectUri: `${AppConfig.HOST}/auth/callback`
 });
 
-var scopes = ["user-read-private", "user-read-email", "user-read-playback-state", "user-modify-playback-state"];
-var authorizeURL = spotifyApi.createAuthorizeURL(scopes, state);
+/**
+ * Generates a random string containing numbers and letters
+ * @param  {number} length The length of the string
+ * @return {string} The generated string
+ */
+var generateRandomString = function(length) {
+	var text = "";
+	var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+	for (var i = 0; i < length; i++) {
+		text += possible.charAt(Math.floor(Math.random() * possible.length));
+	}
+	return text;
+};
 
 let auth = Router();
 
 auth.get("/login", function(req, res) {
+	var scopes = ["user-read-playback-state", "user-modify-playback-state"];
+	var state = generateRandomString(4);
+	var authorizeURL = spotifyApi.createAuthorizeURL(scopes, state);
 	res.redirect(authorizeURL);
 });
 
@@ -24,18 +38,22 @@ auth.get("/login", function(req, res) {
 auth.get("/callback", function(req, res) {
 	/* Read query parameters */
 	var code = req.query.code; // Read the authorization code from the query parameters
-
+	var state = req.query.state;
 	/* Get the access token! */
 	spotifyApi
 		.authorizationCodeGrant(code)
 		.then(
 			function(data) {
 				const { access_token } = data.body;
-				spotifyApi.setAccessToken(access_token);
-				console.log("The access token is " + access_token);
 
-				/* Redirecting back to the main page! :-) */
-				res.redirect("/");
+				/* Redirecting back to the main page and include hash parameters*/
+				res.redirect(
+					"/#" +
+						querystring.stringify({
+							access_token: access_token,
+							state: state
+						})
+				);
 			},
 			function(err) {
 				res.status(err.code);
