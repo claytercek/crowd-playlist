@@ -32,6 +32,7 @@ class Search extends Component {
 		console.log(id);
 		this.props.queueTrack(id);
 		this.props.resetSearch();
+		this.input.value = "";
 	};
 
 	handleTextChange = e => {
@@ -50,7 +51,7 @@ class Search extends Component {
 		const results = this.props.search.results;
 		return (
 			<div className="search">
-				<input onChange={this.handleTextChange} />
+				<input onChange={this.handleTextChange} ref={el => (this.input = el)} />
 				{results && <SearchResults results={results} onSelect={this.selectElement} focus={this.state.focus} />}
 			</div>
 		);

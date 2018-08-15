@@ -1,7 +1,7 @@
 const Router = require("express").Router;
 const Queue = require("./queue");
 const SpotifyWebApi = require("spotify-web-api-node");
-const AuthConfig = require("../config/auth");
+const AuthConfig = require("../src/config/auth");
 
 const spotifyApi = new SpotifyWebApi({
 	clientId: AuthConfig.CLIENT_ID,
@@ -38,9 +38,17 @@ const getToken = async callback => {
 	}
 };
 
-const exportedApi = function(io, spotifyApi) {
-	const queue = new Queue(io, spotifyApi);
+globalSocket = null;
 
+const queue = new Queue({
+	onPlay: () => {
+		const { track, user } = queueManager.getPlayingContext();
+		globalSocket && globalSocket.emit("play track", track, user);
+		globalSocket && globalSocket.broadcast.emit("play track", track, user);
+	}
+});
+
+const exportedApi = function(io, spotifyApi) {
 	let api = Router();
 
 	api.get("/token", async (req, res) => {
@@ -58,6 +66,7 @@ const exportedApi = function(io, spotifyApi) {
 	});
 
 	io.on("connection", function(socket) {
+		globalSocket = socket;
 		console.log("Socket connected: " + socket.id);
 		socket.on("action", action => {
 			switch (action.type) {

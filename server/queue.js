@@ -1,12 +1,12 @@
 class Queue {
-	constructor(io, spotifyAPI) {
+	constructor(options) {
 		this.currentlyPlaying = {
 			track: null,
 			startTimestamp: null
 		};
+
 		this.trackQueue = [];
-		this.gSocket = io;
-		this.spotifyAPI = spotifyAPI;
+		this.onPlay = options.onPlay;
 	}
 
 	// Accessor Methods
@@ -39,13 +39,12 @@ class Queue {
 			track: newTrack.track,
 			startTimestamp: new Date()
 		};
-		this.spotifyAPI.play({ newTrack });
-		// setTimeout(() => {
-		// 	this.play();
-		// }, 1000 + newTrack.track.duration_ms);
+		setTimeout(() => {
+			this.play();
+		}, 1000 + newTrack.track.duration_ms);
 
 		// call socket functions from api.js
-		// this.onPlay();
+		this.onPlay();
 	}
 }
 

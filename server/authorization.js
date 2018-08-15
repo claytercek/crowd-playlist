@@ -1,14 +1,16 @@
 const Router = require("express").Router;
 var SpotifyWebApi = require("spotify-web-api-node");
-const AppConfig = require("../config/app");
-const AuthConfig = require("../config/auth");
+const AppConfig = require("../src/config/app");
+const AuthConfig = require("../src/config/auth");
 
 var state = "some-state-of-my-choice";
+
 var spotifyApi = new SpotifyWebApi({
 	clientId: AuthConfig.CLIENT_ID,
 	clientSecret: AuthConfig.CLIENT_SECRET,
 	redirectUri: `${AppConfig.HOST}/auth/callback`
 });
+
 var scopes = ["user-read-private", "user-read-email", "user-read-playback-state", "user-modify-playback-state"];
 var authorizeURL = spotifyApi.createAuthorizeURL(scopes, state);
 
