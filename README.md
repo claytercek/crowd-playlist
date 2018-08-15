@@ -6,7 +6,7 @@ Clone or download Repo:
 git clone https://github.com/claytercek/spotify.git
 ```
 
-Tell git to ignore your local:
+Tell git to ignore your local version of auth.js:
 
 ```shell
 git update-index --assume-unchanged src/config/auth.js
