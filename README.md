@@ -6,7 +6,7 @@ Clone or download Repo:
 git clone https://github.com/claytercek/spotify.git
 ```
 
-Tell git to ignore your local:
+Tell git to ignore your local version of auth.js:
 
 ```shell
 git update-index --assume-unchanged src/config/auth.js
@@ -16,8 +16,8 @@ Change dummy content in src/config/auth.js to your actual spotify client credent
 
 ```js
 module.exports = {
-	CLIENT_ID: "<CLIENT ID>",
-	CLIENT_SECRET: "<CLIENT SECRET>"
+	CLIENT_ID: "<YOUR CLIENT ID>",
+	CLIENT_SECRET: "<YOUR CLIENT SECRET>"
 };
 ```
 
