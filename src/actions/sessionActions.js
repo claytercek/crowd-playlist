@@ -9,7 +9,7 @@ export const updateTokenSuccess = (access_token, expires_in) => ({
 });
 
 export const updateToken = () => dispatch => {
-	return fetch(`${Config.HOST}/api/token`, {
+	return fetch(`${Config.HOST}/auth/token`, {
 		method: "GET"
 	})
 		.then(res => res.json(), error => console.log("Error fetching token.", error))
