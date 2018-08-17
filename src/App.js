@@ -1,51 +1,21 @@
 import React, { Component } from "react";
-import Queue from "./components/queue";
-import NowPlaying from "./components/nowPlaying";
-import Search from "./components/search";
-import Connect from "./components/connect";
+import Connect from "./pages/connect";
+import Guest from "./pages/guest";
+import Host from "./pages/host";
 import "./styles/AppStyles.css";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 class App extends Component {
-	constructor() {
-		super();
-		const params = this.getHashParams();
-		console.log(params);
-	}
-
-	getHashParams() {
-		var hashParams = {};
-		var e,
-			r = /([^&;=]+)=?([^&;]*)/g,
-			q = window.location.hash.substring(1);
-		e = r.exec(q);
-		while (e) {
-			hashParams[e[1]] = decodeURIComponent(e[2]);
-			e = r.exec(q);
-		}
-		return hashParams;
-	}
-
 	render() {
-		var nowPlaying = {
-			track: {
-				title: "Song Title",
-				artist: "Artist Name",
-				album: "Album Name"
-			},
-			user: {
-				name: "Clay"
-			}
-		};
-
 		return (
-			<div>
-				<Connect />
-				<Search />
-				<NowPlaying track={nowPlaying.track} user={nowPlaying.user} />
-				<Queue />
-			</div>
+			<Router>
+				<div>
+					<Route exact path="/" component={Connect} />
+					<Route path="/host/:id/:access_token" component={Host} />
+					<Route path="/guest/:id" component={Guest} />
+				</div>
+			</Router>
 		);
 	}
 }
-
 export default App;

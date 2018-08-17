@@ -30,7 +30,7 @@ class Search extends Component {
 
 	selectElement = id => {
 		console.log(id);
-		this.props.queueTrack(id);
+		this.props.queueTrack(id, this.props.group);
 		this.props.resetSearch();
 		this.input.value = "";
 	};
@@ -62,11 +62,12 @@ const mapDispatchToProps = dispatch => ({
 	// queueTrack: text => dispatch(queueTrack(text)),
 	searchTracks: query => dispatch(fetchSearch(query)),
 	resetSearch: () => dispatch(resetSearch()),
-	queueTrack: id => dispatch(queueTrack(id))
+	queueTrack: (id, group) => dispatch(queueTrack(id, group))
 });
 
 const mapStateToProps = state => ({
-	search: state.search
+	search: state.search,
+	group: state.session.group
 });
 
 export default connect(

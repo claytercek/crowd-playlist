@@ -17,3 +17,8 @@ export const updateToken = () => dispatch => {
 			dispatch(updateTokenSuccess(res.access_token, res.expires_in));
 		});
 };
+
+export const groupJoin = groupID => ({
+	type: types.GROUP_JOIN,
+	groupID
+});

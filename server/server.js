@@ -28,3 +28,15 @@ server.listen(process.env.PORT || 3001, err => {
 	if (err) throw err;
 	console.log(`> Ready on http://localhost:${process.env.PORT || 3001}`);
 });
+
+//for nodemon
+//otherwise have to run "killall node" to get server working after a crash
+process.on("SIGINT", () => {
+	console.log("Bye bye!");
+	process.exit();
+});
+
+process.on("uncaughtException", () => {
+	console.log("Bye bye!");
+	process.exit();
+});
