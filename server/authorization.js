@@ -2,12 +2,11 @@ const Router = require("express").Router;
 var SpotifyWebApi = require("spotify-web-api-node");
 const AppConfig = require("../src/config/app");
 const AuthConfig = require("../src/config/auth");
-var querystring = require("querystring");
 
 var spotifyApi = new SpotifyWebApi({
 	clientId: AuthConfig.CLIENT_ID,
 	clientSecret: AuthConfig.CLIENT_SECRET,
-	redirectUri: `${AppConfig.CALLBACK}`
+	redirectUri: AppConfig.CALLBACK
 });
 
 var accessToken = null;
