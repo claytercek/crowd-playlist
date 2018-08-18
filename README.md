@@ -10,7 +10,7 @@ Copy .env to .env.local and replace dummy content with your content.
 
 > Note: your callback url should be "< your host url >/auth/callback"
 
-> To run locally, callback should be ste equal to "http://localhost:3001/auth/callback"
+> To run locally, callback should be set equal to "http://localhost:3001/auth/callback"
 
 ```shell
 CLIENT_ID="<YOUR CLIENT ID>"
