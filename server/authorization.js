@@ -7,7 +7,7 @@ var querystring = require("querystring");
 var spotifyApi = new SpotifyWebApi({
 	clientId: AuthConfig.CLIENT_ID,
 	clientSecret: AuthConfig.CLIENT_SECRET,
-	redirectUri: `${AppConfig.HOST}/auth/callback`
+	redirectUri: `${AppConfig.CALLBACK}`
 });
 
 var accessToken = null;
@@ -88,7 +88,7 @@ auth.get("/callback", function(req, res) {
 				// spotifyApi.setAccessToken(access_token);
 
 				/* Redirecting back to the main page and include hash parameters*/
-				res.redirect("http://localhost:3000/host/" + state + "/" + access_token);
+				res.redirect("/host/" + state + "/" + access_token);
 			},
 			function(err) {
 				res.status(err.code);
