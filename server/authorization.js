@@ -1,12 +1,11 @@
 const Router = require("express").Router;
 var SpotifyWebApi = require("spotify-web-api-node");
-const AppConfig = require("../src/config/app");
-const AuthConfig = require("../src/config/auth");
+require("dotenv").config();
 
 var spotifyApi = new SpotifyWebApi({
-	clientId: AuthConfig.CLIENT_ID,
-	clientSecret: AuthConfig.CLIENT_SECRET,
-	redirectUri: AppConfig.CALLBACK
+	clientId: process.env.CLIENT_ID,
+	clientSecret: process.env.CLIENT_SECRET,
+	redirectUri: process.env.CALLBACK
 });
 
 var accessToken = null;
@@ -65,8 +64,10 @@ auth.get("/token", async (req, res) => {
 });
 
 auth.get("/login", function(req, res) {
+	console.log("login get request");
 	var scopes = ["user-read-playback-state", "user-modify-playback-state"];
 	var state = generateRandomString(4);
+	console.log("made it");
 	var authorizeURL = spotifyApi.createAuthorizeURL(scopes, state);
 	console.log("authorizing new host user");
 	res.redirect(authorizeURL);

@@ -1,8 +1,7 @@
 import { QUEUE_TRACK, GROUP_JOIN } from "../actions/actionTypes";
 import { fetchQueue, fetchNowPlaying } from "../actions/queueActions";
 import { playTrack } from "../actions/playbackActions";
-import Config from "../config/app";
-
+import { apiUrl } from "../constants/constants";
 import io from "socket.io-client";
 
 var socket = null;
@@ -30,7 +29,7 @@ export function socketMiddleware(store) {
 	};
 }
 export default function(store) {
-	socket = io.connect(Config.HOST);
+	socket = io.connect(apiUrl);
 
 	socket.on("updateQueue", () => {
 		store.dispatch(fetchQueue());

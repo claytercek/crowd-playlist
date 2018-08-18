@@ -1,6 +1,6 @@
 import * as types from "./actionTypes";
 import fetch from "cross-fetch";
-import * as Config from "../config/app";
+import { apiUrl } from "../constants/constants";
 
 export const updateTokenSuccess = (access_token, expires_in) => ({
 	type: types.UPDATE_TOKEN_SUCCESS,
@@ -9,7 +9,7 @@ export const updateTokenSuccess = (access_token, expires_in) => ({
 });
 
 export const updateToken = () => dispatch => {
-	return fetch(`${Config.HOST}/auth/token`, {
+	return fetch(apiUrl + `/auth/token`, {
 		method: "GET"
 	})
 		.then(res => res.json(), error => console.log("Error fetching token.", error))

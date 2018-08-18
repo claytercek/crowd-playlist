@@ -32,7 +32,7 @@ app.get("*", (req, res) => {
 
 server.listen(process.env.PORT || 3001, err => {
 	if (err) throw err;
-	console.log(`> Ready on http://localhost:${process.env.PORT || 3001}`);
+	console.log(`> Ready on port ${process.env.PORT || 3001}`);
 });
 
 //for nodemon

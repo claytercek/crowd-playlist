@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../styles/AppStyles.css";
-import config from "../config/app";
 import { Link } from "react-router-dom";
+import { apiUrl } from "../constants/constants";
 
 export default class Connect extends Component {
 	constructor() {
@@ -12,7 +12,7 @@ export default class Connect extends Component {
 	}
 
 	login() {
-		window.location = "/auth/login";
+		window.location = apiUrl + "/auth/login";
 	}
 
 	updateInputValue = e => {
