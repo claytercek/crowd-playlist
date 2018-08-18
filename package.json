@@ -26,7 +26,8 @@
 		"start": "node server/server.js",
 		"build": "react-scripts build",
 		"test": "react-scripts test --env=jsdom",
-		"eject": "react-scripts eject"
+		"eject": "react-scripts eject",
+		"postinstall": "yarn build"
 	},
 	"proxy": "https://localhost:3001"
 }
