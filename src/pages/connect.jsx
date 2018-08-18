@@ -12,7 +12,7 @@ export default class Connect extends Component {
 	}
 
 	login() {
-		window.location = config.HOST + "/auth/login";
+		window.location = "/auth/login";
 	}
 
 	updateInputValue = e => {
