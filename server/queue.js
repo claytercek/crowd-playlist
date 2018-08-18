@@ -1,16 +1,17 @@
 class Queue {
 	constructor(options) {
-		this.currentlyPlaying = {
+		this.nowPlaying = {
 			track: null,
-			startTimestamp: null
+			startTimestamp: null,
+			user: null
 		};
 		this.trackQueue = [];
 		this.onPlay = options.onPlay;
 	}
 
 	// Accessor Methods
-	getCurrentlyPlaying() {
-		return this.currentlyPlaying;
+	getNowPlaying() {
+		return this.nowPlaying;
 	}
 
 	getTrackQueue() {
@@ -19,7 +20,7 @@ class Queue {
 
 	enqueue(track) {
 		this.trackQueue.push(track);
-		if (this.currentlyPlaying.track === null) {
+		if (this.nowPlaying.track === null) {
 			this.play();
 		}
 	}
@@ -28,18 +29,20 @@ class Queue {
 		console.log("api.js > play");
 		if (this.trackQueue.length <= 0) {
 			console.log("nothing to play");
-			this.currentlyPlaying = {
+			this.nowPlaying = {
 				track: null,
-				startTimestamp: null
+				startTimestamp: null,
+				user: null
 			};
 			return;
 		}
 
 		const newTrack = this.trackQueue.shift();
 
-		this.currentlyPlaying = {
+		this.nowPlaying = {
 			track: newTrack.track,
-			startTimestamp: new Date()
+			startTimestamp: new Date(),
+			user: "clay"
 		};
 		setTimeout(() => {
 			this.play();

@@ -17,23 +17,11 @@ class Host extends Component {
 	}
 
 	render() {
-		//dummy content, to be replaced
-		var nowPlaying = {
-			track: {
-				title: "Song Title",
-				artist: "Artist Name",
-				album: "Album Name"
-			},
-			user: {
-				name: "Clay"
-			}
-		};
-
 		return (
 			<div>
 				<h1>{}</h1>
 				<Search />
-				<NowPlaying track={nowPlaying.track} user={nowPlaying.user} />
+				<NowPlaying />
 				<Queue />
 			</div>
 		);

@@ -1,5 +1,4 @@
 import * as types from "./actionTypes";
-import fetch from "cross-fetch";
 
 export const searchTracks = query => {
 	return { type: types.SEARCH_TRACKS, query };

@@ -1,5 +1,5 @@
 import { QUEUE_TRACK, GROUP_JOIN } from "../actions/actionTypes";
-import { fetchQueue } from "../actions/queueActions";
+import { fetchQueue, fetchNowPlaying } from "../actions/queueActions";
 import { playTrack } from "../actions/playbackActions";
 import Config from "../config/app";
 
@@ -34,6 +34,11 @@ export default function(store) {
 
 	socket.on("updateQueue", () => {
 		store.dispatch(fetchQueue());
+	});
+
+	socket.on("updateNowPlaying", () => {
+		store.dispatch(fetchQueue());
+		store.dispatch(fetchNowPlaying());
 	});
 
 	socket.on("play track", track => {

@@ -15,6 +15,12 @@ const exportedApi = function(io, spotifyApi) {
 		res.json(queueContainer[group].getTrackQueue());
 	});
 
+	api.get("/nowPlaying/:group", (req, res) => {
+		const { group } = req.params;
+		//get queue for given group
+		res.json(queueContainer[group].getNowPlaying());
+	});
+
 	// websocket connection
 	io.on("connection", function(socket) {
 		// for all socket messages from redux/socket.io
@@ -45,16 +51,18 @@ const exportedApi = function(io, spotifyApi) {
 				//Create new instance of queue object
 				queueContainer[data] = new Queue({
 					onPlay: () => {
-						const { track } = queueContainer[data].getCurrentlyPlaying();
+						const { track } = queueContainer[data].getNowPlaying();
 						// if there is a host, emit to only that host
 						hostContainer[data] && io.to(hostContainer[data]).emit("play track", track);
+						hostContainer[data] && io.to(data).emit("updateNowPlaying");
 					}
 				});
 				console.log("Creating Queue for group " + data);
 			}
 			socket.join(data);
 			// Now that they're in the group, have them update their local queue
-			socket.emit("updateQueue");
+			// socket.emit("updateQueue");
+			socket.emit("updateNowPlaying");
 		});
 
 		//TODO: handle socket disconnections: delete queue if host disconnects, force out all users  in that group

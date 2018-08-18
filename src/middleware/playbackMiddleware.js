@@ -19,7 +19,6 @@ export default store => next => action => {
 			})
 				.then(res => res.json())
 				.then(res => console.log(res));
-			break;
 		default:
 			break;
 	}
