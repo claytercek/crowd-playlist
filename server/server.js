@@ -1,5 +1,6 @@
 const path = require("path");
 const express = require("express");
+const compression = require("compression");
 const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
@@ -12,8 +13,9 @@ app.use(
 		limit: 1024
 	})
 );
+app.use(bodyParser.urlencoded({ extended: false }));
 
-// authorization router
+app.use(compression());
 
 app.use(express.static(path.join(__dirname, "../build")));
 
@@ -23,6 +25,10 @@ app.use("/auth", auth);
 //api router
 // pass socket
 app.use("/api", api(io, spotifyApi));
+
+app.get("*", (req, res) => {
+	res.sendFile(path.resolve(__dirname, "build", "index.html"));
+});
 
 server.listen(process.env.PORT || 3001, err => {
 	if (err) throw err;
