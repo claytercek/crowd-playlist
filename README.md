@@ -6,27 +6,27 @@ Clone or download Repo:
 git clone https://github.com/claytercek/spotify.git
 ```
 
-Tell git to ignore your local version of auth.js:
+Copy .env to .env.local and replace dummy content with your content.
+
+> Note: your callback url should be "< your host url >/auth/callback"
+
+> To run locally, callback should be ste equal to "http://localhost:3001/auth/callback"
 
 ```shell
-git update-index --assume-unchanged src/config/auth.js
+CLIENT_ID="<YOUR CLIENT ID>"
+CLIENT_SECRET="<YOUR CLIENT SECRET>"
+CALLBACK="<CALLBACK URL>"
 ```
 
-Change dummy content in src/config/auth.js to your actual spotify client credentials:
-
-```js
-module.exports = {
-	CLIENT_ID: "<YOUR CLIENT ID>",
-	CLIENT_SECRET: "<YOUR CLIENT SECRET>"
-};
-```
+In order to run the two development servers properly, you must disable CORS on your browser of choice.
+Can be done with a plugin in chrome or firefox.
 
 # How to run
 
 enter any of the following commands from root:
 
 ```shell
-#build and start production server
+#start production server
 yarn start
 
 #start dev server

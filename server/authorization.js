@@ -1,6 +1,6 @@
 const Router = require("express").Router;
 var SpotifyWebApi = require("spotify-web-api-node");
-require("dotenv").config();
+require("dotenv").config({ path: ".env.local" });
 
 var spotifyApi = new SpotifyWebApi({
 	clientId: process.env.CLIENT_ID,
