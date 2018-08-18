@@ -3,19 +3,17 @@ import Queue from "../components/queue";
 import NowPlaying from "../components/nowPlaying";
 import Search from "../components/search";
 import "../styles/AppStyles.css";
-import { groupJoin } from "../actions/sessionActions";
+import { groupJoin, setHostToken } from "../actions/sessionActions";
 import { connect } from "react-redux";
 
 class Host extends Component {
 	componentDidMount() {
 		const { id, access_token } = this.props.match.params;
 		console.log(id, access_token);
-		//TODO: update state with user access_token and indication of host
 
+		this.props.setHostToken(access_token);
 		//update group in local state
 		this.props.groupJoin(id);
-		//make sure server knows you are in group
-		this.props.socketJoinGroup(id);
 	}
 
 	render() {
@@ -47,8 +45,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-	groupJoin: id => dispatch(groupJoin(id)),
-	socketJoinGroup: id => dispatch({ type: "socket/group", data: id, isHost: true })
+	groupJoin: id => dispatch(groupJoin(id, true)),
+	setHostToken: token => dispatch(setHostToken(token))
 });
 
 export default connect(

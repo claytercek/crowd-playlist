@@ -10,7 +10,9 @@ class Guest extends Component {
 	componentDidMount() {
 		const { id } = this.props.match.params;
 		console.log(id);
+		//update group in local state
 		this.props.groupJoin(id);
+		//make sure server knows you are in group
 		this.props.socketJoinGroup(id);
 	}
 

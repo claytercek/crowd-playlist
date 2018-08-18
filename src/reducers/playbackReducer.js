@@ -1,11 +1,11 @@
-import { FETCH_QUEUE_SUCCESS } from "../actions/actionTypes";
+import { PLAY_TRACK_SUCCESS } from "../actions/actionTypes";
 
 const initialState = {};
 
 export default (state = initialState, action) => {
 	switch (action.type) {
-		case FETCH_QUEUE_SUCCESS:
-			return action.data;
+		case PLAY_TRACK_SUCCESS:
+			return action.track;
 		default:
 			return state;
 	}

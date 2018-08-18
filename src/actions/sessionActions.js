@@ -18,7 +18,13 @@ export const updateToken = () => dispatch => {
 		});
 };
 
-export const groupJoin = groupID => ({
+export const groupJoin = (groupID, isHost) => ({
 	type: types.GROUP_JOIN,
-	groupID
+	groupID,
+	isHost
+});
+
+export const setHostToken = token => ({
+	type: types.SET_HOST_TOKEN,
+	token
 });

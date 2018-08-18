@@ -10,6 +10,12 @@ export const LOAD = "LOAD";
 export const UPDATE_TOKEN_SUCCESS = "UPDATE_TOKEN_SUCCESS";
 
 export const QUEUE_TRACK = "QUEUE_TRACK";
-export const QUEUE_UPDATE_LOCAL = "QUEUE_UPDATE_LOCAL";
+export const FETCH_QUEUE = "FETCH_QUEUE";
+export const FETCH_QUEUE_SUCCESS = "FETCH_QUEUE_SUCCESS";
 
 export const GROUP_JOIN = "GROUP_JOIN";
+
+export const PLAY_TRACK = "PLAY_TRACK";
+export const PLAY_TRACK_SUCCESS = "PLAY_TRACK_SUCCESS";
+
+export const SET_HOST_TOKEN = "SET_HOST_TOKEN";

@@ -4,7 +4,6 @@ class Queue {
 			track: null,
 			startTimestamp: null
 		};
-
 		this.trackQueue = [];
 		this.onPlay = options.onPlay;
 	}
@@ -20,13 +19,16 @@ class Queue {
 
 	enqueue(track) {
 		this.trackQueue.push(track);
+		if (this.currentlyPlaying.track === null) {
+			this.play();
+		}
 	}
 
 	play() {
 		console.log("api.js > play");
 		if (this.trackQueue.length <= 0) {
 			console.log("nothing to play");
-			this.playingContext = {
+			this.currentlyPlaying = {
 				track: null,
 				startTimestamp: null
 			};

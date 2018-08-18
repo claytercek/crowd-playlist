@@ -18,50 +18,46 @@ const exportedApi = function(io, spotifyApi) {
 	// websocket connection
 	io.on("connection", function(socket) {
 		// for all socket messages from redux/socket.io
-		socket.on("action", action => {
-			switch (action.type) {
-				//user sending track id
-				case "socket/queueTrack":
-					let trackId = action.data;
-
-					//using track id, get all info about track from spotify
-					spotifyApi.getTrack(trackId).then(
-						function(data) {
-							console.log("adding track to " + action.group + " queue: " + data.body.name);
-							//add to group queue
-							queueContainer[action.group].enqueue({
-								track: data.body
-							});
-
-							// tell all users in group to update queue
-							io.to(action.group).emit("updateQueue");
-						},
-						function(err) {
-							console.error(err);
-						}
-					);
-					break;
-				case "socket/group":
-					console.log("socket", socket.id, "is joining room", action.data);
-
-					// if user is host
-					if (action.isHost) {
-						//Set user to host of new group
-						hostContainer[action.data] = socket.id;
-						//Create new instance of queue object
-						queueContainer[action.data] = new Queue({
-							onPlay: () => {
-								//TODO: get latest track, and emit "play" to host user
-							}
-						});
-						console.log("Creating Queue for group " + action.data);
-					}
-					socket.join(action.data);
-					// Now that they're in the group, have them update their local queue
-					socket.emit("updateQueue");
-					break;
-			}
+		socket.on("queueTrack", (trackId, group) => {
+			//using track id, get all info about track from spotify
+			spotifyApi.getTrack(trackId).then(
+				function(data) {
+					console.log("adding track to " + group + " queue: " + data.body.name);
+					//add to group queue
+					queueContainer[group].enqueue({
+						track: data.body
+					});
+					// tell all users in group to update queue
+					io.to(group).emit("updateQueue");
+				},
+				function(err) {
+					console.error(err);
+				}
+			);
 		});
+
+		socket.on("groupJoin", (data, isHost) => {
+			console.log("socket", socket.id, "is joining room", data);
+			// if user is host
+			if (isHost) {
+				//Set user to host of new group
+				hostContainer[data] = socket.id;
+				//Create new instance of queue object
+				queueContainer[data] = new Queue({
+					onPlay: () => {
+						const { track } = queueContainer[data].getCurrentlyPlaying();
+						// if there is a host, emit to only that host
+						hostContainer[data] && io.to(hostContainer[data]).emit("play track", track);
+					}
+				});
+				console.log("Creating Queue for group " + data);
+			}
+			socket.join(data);
+			// Now that they're in the group, have them update their local queue
+			socket.emit("updateQueue");
+		});
+
+		//TODO: handle socket disconnections: delete queue if host disconnects, force out all users  in that group
 	});
 
 	return api;

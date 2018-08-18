@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchSearch, resetSearch } from "../actions/searchActions";
+import { searchTracks, resetSearch } from "../actions/searchActions";
 import { queueTrack } from "../actions/queueActions";
 
 class SearchResults extends Component {
@@ -60,7 +60,7 @@ class Search extends Component {
 
 const mapDispatchToProps = dispatch => ({
 	// queueTrack: text => dispatch(queueTrack(text)),
-	searchTracks: query => dispatch(fetchSearch(query)),
+	searchTracks: query => dispatch(searchTracks(query)),
 	resetSearch: () => dispatch(resetSearch()),
 	queueTrack: (id, group) => dispatch(queueTrack(id, group))
 });
