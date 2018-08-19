@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Connect from "./pages/connect";
 import Guest from "./pages/guest";
 import Host from "./pages/host";
-import "./styles/AppStyles.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 class App extends Component {

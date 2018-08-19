@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../styles/nowPlayingStyles.css";
+// import "../styles/nowPlayingStyles.css";
 import { connect } from "react-redux";
 
 class NowPlaying extends Component {

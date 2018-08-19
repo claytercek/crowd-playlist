@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import QueueItem from "./queueItem";
 import { connect } from "react-redux";
-import "../styles/queueStyles.css";
+// import "../styles/queueStyles.css";
 
 class Queue extends Component {
 	render() {

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Queue from "../components/queue";
 import NowPlaying from "../components/nowPlaying";
 import Search from "../components/search";
-import "../styles/AppStyles.css";
 import { groupJoin, setHostToken } from "../actions/sessionActions";
 import { connect } from "react-redux";
 

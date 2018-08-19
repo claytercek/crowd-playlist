@@ -1,0 +1,169 @@
+.panel {
+	background-color: #fff;
+	max-width: 392px;
+	width: 100%;
+	border-radius: 14px;
+	height: 435px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+div.connect {
+	padding: 1rem;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+img {
+	width: 80px;
+	margin-bottom: 1rem;
+}
+
+button,
+input[type="submit"] {
+	border: none;
+	background-color: #4256a0;
+	color: white;
+	font-family: Raleway, sans-serif;
+	cursor: pointer;
+}
+
+button {
+	margin-top: 2rem;
+}
+
+button:hover,
+input[type="submit"]:hover {
+	background-color: #576fc9;
+}
+
+button:active,
+input[type="submit"]:active {
+	background-color: #334483;
+}
+
+button,
+input {
+	width: 233px;
+	height: 52.98px;
+	border-radius: 500px;
+	font-weight: 200;
+	font-size: 20px;
+}
+
+button span {
+	font-weight: 600;
+}
+
+input[type="text"] {
+	border: none;
+	background-color: #ebebeb;
+	padding: 0 1.5rem;
+	margin-bottom: 0.5rem;
+	color: #24233b;
+	font-family: Raleway, sans-serif;
+}
+
+input[type="submit"] {
+	margin-top: 1rem;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	margin: auto;
+	transition: all 0.2s ease-in 0.2s;
+}
+
+form.formHidden {
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.2s ease-in;
+}
+
+label {
+	padding-left: 1.5rem;
+	font-weight: 200;
+	font-size: 18px;
+	color: #9d9d9d;
+}
+
+/* input:invalid, */
+input:-moz-ui-invalid {
+	box-shadow: 0px 0px 0px 2px #f77;
+}
+
+.panel.formHidden > button:first-of-type,
+.panel.formHidden > button:last-of-type,
+.panel.formHidden img {
+	transform: translateY(0px);
+	opacity: 1;
+	transition: transform 0.3s ease-out 0.2s, opacity 0.3s ease-out 0.2s;
+}
+
+.panel > button:first-of-type,
+.panel img {
+	transform: translateY(-200px);
+	opacity: 0;
+	transition: all 0.3s ease-in;
+}
+
+.panel > button:last-of-type {
+	transform: translateY(15px);
+	transition: all 0.3s ease-in;
+}
+
+.back {
+	height: unset;
+	width: unset;
+	background-color: unset;
+	font-size: 18px;
+	color: #24233b;
+	font-weight: 400;
+	text-align: left;
+	padding-left: 1.5rem;
+	margin-bottom: 0.5rem;
+	transform: translateY(-20px);
+}
+
+.back:hover {
+	background-color: unset;
+	opacity: 0.8;
+}
+
+.connect .text {
+	display: none;
+	color: white;
+	font-weight: 100;
+	font-size: 18px;
+}
+
+.connect .text strong {
+	font-weight: 600;
+}
+
+.connect .text h1 {
+	font-size: 2.5rem;
+	font-weight: 800;
+}
+
+@media screen and (min-width: 900px) {
+	div.connect {
+		flex-flow: row nowrap;
+	}
+	.connect .text {
+		display: block;
+		margin-left: 2rem;
+	}
+
+	.connect .text p {
+		max-width: 500px;
+	}
+}

@@ -1,0 +1,93 @@
+/* .Queue ul {
+	margin: 0;
+	list-style-type: none;
+	padding-left: 0;
+}
+
+.Queue li,
+.lable {
+	display: flex;
+	margin: 0;
+	font-family: sans-serif;
+	padding: 0.6rem;
+	border-bottom: 1px solid #ddd;
+}
+
+p {
+	display: block;
+	margin: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-right: 1rem;
+}
+
+.title {
+	width: 40%;
+	flex-grow: 1;
+}
+
+.artist,
+.album {
+	width: 25%;
+}
+
+.length {
+	width: 3.5rem;
+	text-align: right;
+	align-self: flex-end;
+	padding-right: 0;
+}
+
+.lable {
+	font-weight: bold;
+}
+
+.NowPlaying {
+	font-family: sans-serif;
+}
+
+@media (max-width: 600px) {
+	.Queue .lable {
+		display: none;
+	}
+
+	.Queue li {
+		flex-direction: column;
+	}
+
+	.Queue .length,
+	.Queue .album {
+		display: none;
+	}
+
+	.Queue .title {
+		width: 100%;
+		font-size: 1rem;
+	}
+	.Queue .artist {
+		width: 100%;
+		font-size: 0.9rem;
+		margin-top: 0.1rem;
+		opacity: 0.6;
+	}
+} */
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	min-width: 100%;
+	min-height: 100%;
+	height: 100%;
+	background-color: #24233b;
+	font-family: Raleway, sans-serif;
+	/* padding: 1rem; */
+	margin: 0;
+}
