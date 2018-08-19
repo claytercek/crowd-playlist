@@ -67,7 +67,6 @@ auth.get("/login", function(req, res) {
 	console.log("login get request");
 	var scopes = ["user-read-playback-state", "user-modify-playback-state"];
 	var state = generateRandomString(4);
-	console.log("made it");
 	var authorizeURL = spotifyApi.createAuthorizeURL(scopes, state);
 	console.log("authorizing new host user");
 	res.redirect(authorizeURL);
@@ -88,6 +87,7 @@ auth.get("/callback", function(req, res) {
 				// spotifyApi.setAccessToken(access_token);
 
 				/* Redirecting back to the main page and include hash parameters*/
+				console.log("NODE_ENV", process.env.NODE_ENV);
 				res.redirect("/host/" + state + "/" + access_token);
 			},
 			function(err) {

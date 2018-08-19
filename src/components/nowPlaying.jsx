@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import "../styles/nowPlayingStyles.css";
+import "../static/css/nowPlayingStyles.css";
 import { connect } from "react-redux";
 
 class NowPlaying extends Component {
@@ -7,14 +7,17 @@ class NowPlaying extends Component {
 		return (
 			(this.props.track && (
 				<div className="NowPlaying">
-					<h2>{this.props.track.name}</h2>
-					<h3>{this.props.track.artists[0].name}</h3>
-					<h3>{this.props.track.album.name}</h3>
-					<img src={this.props.track.album.images[1].url} alt={this.props.track.album.name} />
+					<div className="wave" />
+					<div className="trackInfo">
+						<h2>{this.props.track.name}</h2>
+						<h3>{this.props.track.artists[0].name}</h3>
+						{/* <h3>{this.props.track.album.name}</h3> */}
+					</div>
+					<img class="trackImg" src={this.props.track.album.images[1].url} alt={this.props.track.album.name} />
 				</div>
 			)) || (
 				<div className="NowPlaying">
-					<h2>No tracks queued</h2>
+					<div className="wave" />
 				</div>
 			)
 		);

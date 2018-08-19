@@ -53,7 +53,7 @@ export default class Connect extends Component {
 
 	render() {
 		if (this.state.formSubmitted) {
-			return <Redirect push to={"/guest/" + this.state.groupInput} />;
+			return <Redirect push to={"/guest/" + this.state.groupInput + "/" + this.state.nameInput} />;
 		}
 		return (
 			<div className="connect">
@@ -62,7 +62,6 @@ export default class Connect extends Component {
 					<button onClick={this.login}>
 						<span>create</span> room
 					</button>
-					<br />
 					<button onClick={this.showForm}>
 						<span>join</span> room
 					</button>

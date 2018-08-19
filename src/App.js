@@ -11,7 +11,7 @@ class App extends Component {
 				<div>
 					<Route exact path="/" component={Connect} />
 					<Route path="/host/:id/:access_token" component={Host} />
-					<Route path="/guest/:id" component={Guest} />
+					<Route path="/guest/:id/:name" component={Guest} />
 				</div>
 			</Router>
 		);

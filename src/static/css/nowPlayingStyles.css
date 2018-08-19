@@ -1,3 +1,53 @@
-.NowPlaying {
-	font-family: sans-serif;
+div.NowPlaying {
+	background: white;
+	position: absolute;
+	height: 100px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow: visible;
+	display: flex;
+	flex-flow: row-reverse nowrap;
+	align-items: center;
+	justify-content: flex-end;
+	padding: 1rem;
+}
+
+.NowPlaying .wave {
+	height: 10vw;
+	width: 100%;
+	left: 0;
+	right: 0;
+	position: absolute;
+	top: -15px;
+	background: url("../imgs/mobile_wave.svg") no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+.NowPlaying img {
+	border-radius: 100%;
+	z-index: 10;
+	height: 60px;
+	width: 60px;
+	margin: 0 0.5rem;
+}
+
+.NowPlaying .trackInfo {
+	color: #24233b;
+	font-size: 18px;
+}
+
+.NowPlaying .trackInfo h2 {
+	font-size: 22px;
+	margin: 0;
+	/* overflow: ellipsis; */
+}
+
+.NowPlaying .trackInfo h3 {
+	font-size: 16px;
+	margin: 0;
+	opacity: 0.8;
+	font-weight: 300;
+	/* overflow: ellipsis; */
 }
