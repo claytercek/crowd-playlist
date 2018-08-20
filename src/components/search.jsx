@@ -14,7 +14,6 @@ class SearchResults extends Component {
 					const className = isFocused ? "focused" : "";
 					return (
 						<li key={result.id} className={className} onClick={() => this.props.onSelect(result.id)}>
-							{console.dir(result)}
 							<img src={result.album.images[2].url} alt="album cover" />
 							<div>
 								<h3>{result.name}</h3>
@@ -47,7 +46,7 @@ class Search extends Component {
 		this.setState({ text: text, searchActive: true });
 
 		if (text === "") {
-			this.setState({ focus: -1 });
+			this.setState({ focus: -1, searchActive: false });
 			this.props.resetSearch();
 		} else {
 			this.props.searchTracks(text);
@@ -70,7 +69,7 @@ class Search extends Component {
 		var SearchClass = this.state.searchActive ? "active" : "";
 		return (
 			<div className={"Search " + SearchClass}>
-				<div class="inputBar">
+				<div className="inputBar">
 					<img id="searchIcon" src={require("../static/imgs/search.svg")} alt="search icon" />
 					<input onClick={this.setSearchActive} placeholder={placeHolder} onChange={this.handleTextChange} ref={el => (this.input = el)} />
 					{this.state.searchActive && <img id="closeIcon" src={require("../static/imgs/cancel.svg")} alt="close icon" onClick={this.setSearchInactive} />}

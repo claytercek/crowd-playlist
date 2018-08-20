@@ -15,6 +15,7 @@
 	display: flex;
 	flex-flow: column wrap;
 	height: 60px;
+	/* width: 100%; */
 	justify-content: center;
 	align-content: space-between;
 }
@@ -45,6 +46,7 @@
 .Queue .vote img {
 	width: 22px;
 	margin: 0;
+	cursor: pointer;
 }
 
 .Queue .vote p {

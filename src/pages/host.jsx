@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Queue from "../components/queue";
 import NowPlaying from "../components/nowPlaying";
 import Search from "../components/search";
-import { groupJoin, setHostToken } from "../actions/sessionActions";
+import { groupJoin, setHostToken, setName } from "../actions/sessionActions";
 import { connect } from "react-redux";
 
 class Host extends Component {
@@ -13,12 +13,12 @@ class Host extends Component {
 		this.props.setHostToken(access_token);
 		//update group in local state
 		this.props.groupJoin(id);
+		this.props.setName("host");
 	}
 
 	render() {
 		return (
 			<div className="playlist">
-				<h1>{}</h1>
 				<Search />
 				<NowPlaying />
 				<Queue />
@@ -33,7 +33,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
 	groupJoin: id => dispatch(groupJoin(id, true)),
-	setHostToken: token => dispatch(setHostToken(token))
+	setHostToken: token => dispatch(setHostToken(token)),
+	setName: name => dispatch(setName(name))
 });
 
 export default connect(

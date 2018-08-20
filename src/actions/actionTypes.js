@@ -22,3 +22,8 @@ export const PLAY_TRACK = "PLAY_TRACK";
 export const PLAY_TRACK_SUCCESS = "PLAY_TRACK_SUCCESS";
 
 export const SET_HOST_TOKEN = "SET_HOST_TOKEN";
+export const SET_NAME = "SET_NAME";
+
+export const VOTE_UP = "VOTE_UP";
+export const VOTE_DOWN = "VOTE_DOWN";
+export const VOTE_NEUTRAL = "VOTE_NEUTRAL";

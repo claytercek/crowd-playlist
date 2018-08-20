@@ -2,35 +2,24 @@ import React, { Component } from "react";
 import Queue from "../components/queue";
 import NowPlaying from "../components/nowPlaying";
 import Search from "../components/search";
-import { groupJoin } from "../actions/sessionActions";
+import { groupJoin, setName } from "../actions/sessionActions";
 import { connect } from "react-redux";
 
 class Guest extends Component {
 	componentDidMount() {
-		const { id } = this.props.match.params;
+		const { id, name } = this.props.match.params;
 		console.log(id);
 		//update group in local state
 		this.props.groupJoin(id);
 		//make sure server knows you are in group
-		this.props.socketJoinGroup(id);
+		this.props.setName(name);
 	}
 
 	render() {
-		var nowPlaying = {
-			track: {
-				title: "Song Title",
-				artist: "Artist Name",
-				album: "Album Name"
-			},
-			user: {
-				name: "Clay"
-			}
-		};
-
 		return (
 			<div className="playlist">
 				<Search />
-				<NowPlaying track={nowPlaying.track} user={nowPlaying.user} />
+				<NowPlaying />
 				<Queue />
 			</div>
 		);
@@ -43,7 +32,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
 	groupJoin: id => dispatch(groupJoin(id)),
-	socketJoinGroup: id => dispatch({ type: "socket/group", data: id, isHost: false })
+	setName: name => dispatch(setName(name))
 });
 
 export default connect(

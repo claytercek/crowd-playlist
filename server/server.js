@@ -37,12 +37,12 @@ server.listen(process.env.PORT || 3001, err => {
 
 //for nodemon
 //otherwise have to run "killall node" to get server working after a crash
-process.on("SIGINT", () => {
-	console.log("Bye bye!");
-	process.exit();
-});
+// process.on("SIGINT", () => {
+// 	console.log("Bye bye!");
+// 	process.exit();
+// });
 
-process.on("uncaughtException", () => {
-	console.log("Bye bye!");
-	process.exit();
-});
+// process.on("uncaughtException", () => {
+// 	console.log("Bye bye!");
+// 	process.exit();
+// });

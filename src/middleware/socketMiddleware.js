@@ -1,4 +1,4 @@
-import { QUEUE_TRACK, GROUP_JOIN } from "../actions/actionTypes";
+import { QUEUE_TRACK, GROUP_JOIN, VOTE_UP, VOTE_DOWN, VOTE_NEUTRAL } from "../actions/actionTypes";
 import { fetchQueue, fetchNowPlaying } from "../actions/queueActions";
 import { playTrack } from "../actions/playbackActions";
 import { apiUrl } from "../constants/constants";
@@ -9,11 +9,24 @@ var socket = null;
 export function socketMiddleware(store) {
 	return next => action => {
 		const result = next(action);
+		const session = store.getState().session;
 
 		if (socket) {
 			switch (action.type) {
 				case QUEUE_TRACK: {
-					socket.emit("queueTrack", action.id, store.getState().session.group);
+					socket.emit("queueTrack", action.id, session.group, session.user_id, session.name);
+					break;
+				}
+				case VOTE_UP: {
+					socket.emit("voteUp", action.trackIndex, session.group, session.user_id);
+					break;
+				}
+				case VOTE_DOWN: {
+					socket.emit("voteDown", action.trackIndex, session.group, session.user_id);
+					break;
+				}
+				case VOTE_NEUTRAL: {
+					socket.emit("voteNeutral", action.trackIndex, session.group, session.user_id);
 					break;
 				}
 				case GROUP_JOIN: {

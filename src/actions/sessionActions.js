@@ -28,3 +28,8 @@ export const setHostToken = token => ({
 	type: types.SET_HOST_TOKEN,
 	token
 });
+
+export const setName = name => ({
+	type: types.SET_NAME,
+	name
+});

@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { voteUp, voteDown, voteNeutral } from "../actions/voteActions";
 
 function msToTime(s) {
 	var ms = s % 1000;
@@ -13,6 +15,35 @@ function msToTime(s) {
 }
 
 class Vote extends Component {
+	constructor(props) {
+		super(props);
+		console.log(this.props.index);
+		this.upClick = this.upClick.bind(this);
+		this.downClick = this.downClick.bind(this);
+	}
+
+	upClick() {
+		const userId = this.props.userId;
+		const positive = this.props.voters.positive;
+
+		if (positive.includes(userId)) {
+			this.props.voteNeutral(this.props.index);
+		} else {
+			this.props.voteUp(this.props.index);
+		}
+	}
+
+	downClick() {
+		const userId = this.props.userId;
+		const negative = this.props.voters.negative;
+
+		if (negative.includes(userId)) {
+			this.props.voteNeutral(this.props.index);
+		} else {
+			this.props.voteDown(this.props.index);
+		}
+	}
+
 	render() {
 		const userId = this.props.userId;
 		const votes = this.props.voters.value;
@@ -33,15 +64,15 @@ class Vote extends Component {
 
 		return (
 			<div className="vote">
-				<img src={upIcon} alt="vote Up" />
+				<img src={upIcon} alt="vote Up" onClick={this.upClick} />
 				<p>{votes}</p>
-				<img src={downIcon} alt="vote Down" />
+				<img src={downIcon} alt="vote Down" onClick={this.downClick} />
 			</div>
 		);
 	}
 }
 
-export default class QueueItem extends Component {
+export class QueueItem extends Component {
 	render() {
 		const title = this.props.track.name;
 		const artist = this.props.track.artists[0].name;
@@ -53,8 +84,23 @@ export default class QueueItem extends Component {
 				<h3 className="artist">{artist}</h3>
 				{/* <p className="album">{album}</p> */}
 				{/* <p className="length">{msToTime(length)}</p> */}
-				<Vote voters={{ value: 0, positive: [], negative: [] }} userId="abcd" />
+				<Vote index={this.props.index} userId={this.props.user_id} voters={this.props.voters} voteUp={this.props.voteUp} voteDown={this.props.voteDown} voteNeutral={this.props.voteNeutral} />
 			</li>
 		);
 	}
 }
+
+const mapDispatchToProps = dispatch => ({
+	voteNeutral: trackIndex => dispatch(voteNeutral(trackIndex)),
+	voteUp: trackIndex => dispatch(voteUp(trackIndex)),
+	voteDown: trackIndex => dispatch(voteDown(trackIndex))
+});
+
+const mapStateToProps = state => ({
+	user_id: state.session.user_id
+});
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(QueueItem);

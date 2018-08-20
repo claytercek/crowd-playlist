@@ -16,5 +16,6 @@ export const initStore = (initialState = {}) => {
 	const store = createStore(rootReducer, initialState, composeEnhancers(applyMiddleware(thunk, playbackMiddleware, searchMiddleware, queueMiddleware, socketMiddleware)));
 	socketMiddlewareDefault(store);
 	store.dispatch(updateToken());
+
 	return store;
 };
