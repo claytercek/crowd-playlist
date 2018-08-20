@@ -11,6 +11,7 @@ div.NowPlaying {
 	align-items: center;
 	justify-content: flex-end;
 	padding: 0.5rem;
+	z-index: 10;
 }
 
 .NowPlaying .wave {
@@ -37,12 +38,16 @@ div.NowPlaying {
 	color: #24233b;
 	font-size: 18px;
 	z-index: 10;
+	width: 50%;
+	flex-grow: 1;
 }
 
 .NowPlaying .trackInfo h2 {
 	font-size: 20px;
 	margin: 0;
-	/* overflow: ellipsis; */
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .NowPlaying .trackInfo h3 {
@@ -50,5 +55,7 @@ div.NowPlaying {
 	margin: 0;
 	opacity: 0.8;
 	font-weight: 300;
-	/* overflow: ellipsis; */
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }

@@ -28,7 +28,7 @@ class Guest extends Component {
 		};
 
 		return (
-			<div>
+			<div className="playlist">
 				<Search />
 				<NowPlaying track={nowPlaying.track} user={nowPlaying.user} />
 				<Queue />

@@ -79,6 +79,7 @@ p {
 
 html {
 	height: 100%;
+	background-color: #24233b;
 }
 
 body {
@@ -87,7 +88,6 @@ body {
 	font-family: Raleway, sans-serif;
 	/* padding: 1rem; */
 	margin: 0;
-	overflow: hidden;
 }
 
 #root {

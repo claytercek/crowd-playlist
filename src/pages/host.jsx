@@ -17,7 +17,7 @@ class Host extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="playlist">
 				<h1>{}</h1>
 				<Search />
 				<NowPlaying />

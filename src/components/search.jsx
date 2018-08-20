@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { searchTracks, resetSearch } from "../actions/searchActions";
 import { queueTrack } from "../actions/queueActions";
+import "../static/css/searchStyles.css";
 
 class SearchResults extends Component {
 	render() {
@@ -13,7 +14,12 @@ class SearchResults extends Component {
 					const className = isFocused ? "focused" : "";
 					return (
 						<li key={result.id} className={className} onClick={() => this.props.onSelect(result.id)}>
-							{result.name} - {result.artists[0].name}
+							{console.dir(result)}
+							<img src={result.album.images[2].url} alt="album cover" />
+							<div>
+								<h3>{result.name}</h3>
+								<h4>{result.artists[0].name}</h4>
+							</div>
 						</li>
 					);
 				})}
@@ -25,19 +31,20 @@ class SearchResults extends Component {
 class Search extends Component {
 	state = {
 		text: this.props.text || "",
-		focus: -1
+		focus: -1,
+		searchActive: false
 	};
 
 	selectElement = id => {
-		console.log(id);
 		this.props.queueTrack(id, this.props.group);
 		this.props.resetSearch();
 		this.input.value = "";
+		this.setState({ focus: -1, searchActive: false });
 	};
 
 	handleTextChange = e => {
 		const text = e.target.value;
-		this.setState({ text: text });
+		this.setState({ text: text, searchActive: true });
 
 		if (text === "") {
 			this.setState({ focus: -1 });
@@ -47,11 +54,27 @@ class Search extends Component {
 		}
 	};
 
+	setSearchActive = () => {
+		this.setState({ searchActive: true });
+	};
+
+	setSearchInactive = () => {
+		this.setState({ focus: -1, searchActive: false });
+		this.props.resetSearch();
+		this.input.value = "";
+	};
+
 	render() {
+		const placeHolder = "Search for tracks to add";
 		const results = this.props.search.results;
+		var SearchClass = this.state.searchActive ? "active" : "";
 		return (
-			<div className="search">
-				<input onChange={this.handleTextChange} ref={el => (this.input = el)} />
+			<div className={"Search " + SearchClass}>
+				<div class="inputBar">
+					<img id="searchIcon" src={require("../static/imgs/search.svg")} alt="search icon" />
+					<input onClick={this.setSearchActive} placeholder={placeHolder} onChange={this.handleTextChange} ref={el => (this.input = el)} />
+					{this.state.searchActive && <img id="closeIcon" src={require("../static/imgs/cancel.svg")} alt="close icon" onClick={this.setSearchInactive} />}
+				</div>
 				{results && <SearchResults results={results} onSelect={this.selectElement} focus={this.state.focus} />}
 			</div>
 		);

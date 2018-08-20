@@ -13,7 +13,7 @@ class NowPlaying extends Component {
 						<h3>{this.props.track.artists[0].name}</h3>
 						{/* <h3>{this.props.track.album.name}</h3> */}
 					</div>
-					<img class="trackImg" src={this.props.track.album.images[1].url} alt={this.props.track.album.name} />
+					<img className="trackImg" src={this.props.track.album.images[1].url} alt={this.props.track.album.name} />
 				</div>
 			)) || (
 				<div className="NowPlaying">
