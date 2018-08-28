@@ -14,7 +14,7 @@ class SearchResults extends Component {
 					const className = isFocused ? "focused" : "";
 					return (
 						<li key={result.id} className={className} onClick={() => this.props.onSelect(result.id)}>
-							<img src={result.album.images[2].url} alt="album cover" />
+							{result.album.images[2] && <img src={result.album.images[2].url} alt="album cover" />}
 							<div>
 								<h3>{result.name}</h3>
 								<h4>{result.artists[0].name}</h4>
