@@ -47,19 +47,8 @@ export default function(store) {
 		{ "reconnection limit": 3000, "max reconnection attempts": Number.MAX_VALUE, "connect timeout": 7000 }
 	);
 
-	socket.on("disconnect", function() {
-		alert("disconnected");
-	});
-
-	socket.on("reconnecting", function(attempt) {
-		alert("reconnecting", attempt);
-	});
-
-	socket.on("reconnect_error", function(error) {
-		alert("reconnect error", error);
-	});
-
 	socket.on("updateQueue", () => {
+		console.log("fetching queue");
 		store.dispatch(fetchQueue());
 	});
 
