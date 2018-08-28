@@ -44,8 +44,20 @@ export function socketMiddleware(store) {
 export default function(store) {
 	socket = io.connect(
 		apiUrl,
-		{ reconnection: true, reconnectionDelay: 500, maxReconnectionAttempts: Infinity }
+		{ "reconnection limit": 3000, "max reconnection attempts": Number.MAX_VALUE, "connect timeout": 7000 }
 	);
+
+	socket.on("disconnect", function() {
+		alert("disconnected");
+	});
+
+	socket.on("reconnecting", function(attempt) {
+		alert("reconnecting", attempt);
+	});
+
+	socket.on("reconnect_error", function(error) {
+		alert("reconnect error", error);
+	});
 
 	socket.on("updateQueue", () => {
 		store.dispatch(fetchQueue());
