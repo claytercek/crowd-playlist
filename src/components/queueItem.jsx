@@ -17,7 +17,6 @@ function msToTime(s) {
 class Vote extends Component {
 	constructor(props) {
 		super(props);
-		console.log(this.props.index);
 		this.upClick = this.upClick.bind(this);
 		this.downClick = this.downClick.bind(this);
 	}

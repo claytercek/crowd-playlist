@@ -6,11 +6,11 @@ import "../static/css/searchStyles.css";
 
 class SearchResults extends Component {
 	render() {
-		const { results, focusItem } = this.props;
+		const { results, focus } = this.props;
 		return (
 			<ul>
 				{results.map((result, index) => {
-					const isFocused = focusItem === index;
+					const isFocused = focus === index;
 					const className = isFocused ? "focused" : "";
 					return (
 						<li key={result.id} className={className} onClick={() => this.props.onSelect(result.id)}>
@@ -53,6 +53,37 @@ class Search extends Component {
 		}
 	};
 
+	handleKeyDown = e => {
+		switch (e.keyCode) {
+			case 38: // up
+				this.setState({ focus: this.state.focus - 1 });
+				break;
+			case 40: // down
+				this.setState({ focus: this.state.focus + 1 });
+				break;
+			case 13: {
+				let correct = false;
+				if (this.state.focus !== -1) {
+					this.props.queueTrack(this.props.search.results[this.state.focus].id);
+					correct = true;
+				} else {
+					const text = e.target.value.trim();
+					if (text.length !== 0) {
+						this.props.queueTrack(text);
+						correct = true;
+					}
+				}
+				if (correct) {
+					this.setState({ text: "" });
+					this.props.resetSearch();
+					this.setState({ focus: -1, searchActive: false });
+					this.input.value = "";
+				}
+				break;
+			}
+		}
+	};
+
 	setSearchActive = () => {
 		this.setState({ searchActive: true });
 	};
@@ -71,7 +102,7 @@ class Search extends Component {
 			<div className={"Search " + SearchClass}>
 				<div className="inputBar">
 					<img id="searchIcon" src={require("../static/imgs/search.svg")} alt="search icon" />
-					<input onClick={this.setSearchActive} placeholder={placeHolder} onChange={this.handleTextChange} ref={el => (this.input = el)} />
+					<input onClick={this.setSearchActive} placeholder={placeHolder} onChange={this.handleTextChange} onKeyDown={this.handleKeyDown} ref={el => (this.input = el)} />
 					{this.state.searchActive && <img id="closeIcon" src={require("../static/imgs/cancel.svg")} alt="close icon" onClick={this.setSearchInactive} />}
 				</div>
 				{results && <SearchResults results={results} onSelect={this.selectElement} focus={this.state.focus} />}

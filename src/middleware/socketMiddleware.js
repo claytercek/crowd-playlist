@@ -45,13 +45,13 @@ export function socketMiddleware(store) {
 export default function(store) {
 	socket = io.connect(
 		apiUrl,
-		{ "reconnection limit": 3000, "max reconnection attempts": Number.MAX_VALUE, "connect timeout": 7000 }
+		{ "reconnection limit": 500, "max reconnection attempts": Number.MAX_VALUE, "connect timeout": 7000 }
 	);
 
 	socket.on("reconnect", () => {
-		console.log("RECONNECTED");
 		var groupId = store.getState().session.group;
-		socket.emit("groupJoin", groupId, false);
+		var isHost = store.getState().session.host_token != null ? true : false;
+		socket.emit("groupJoin", groupId, isHost);
 	});
 
 	socket.on("updateQueue", () => {

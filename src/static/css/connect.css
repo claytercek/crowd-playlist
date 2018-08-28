@@ -149,7 +149,7 @@ input:-moz-ui-invalid {
 .connect .text {
 	display: none;
 	color: white;
-	font-weight: 100;
+	font-weight: 200;
 	font-size: 18px;
 }
 

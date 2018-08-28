@@ -64,11 +64,10 @@ auth.get("/token", async (req, res) => {
 });
 
 auth.get("/login", function(req, res) {
-	console.log("login get request");
+	console.log("authorizing new host user");
 	var scopes = ["user-read-playback-state", "user-modify-playback-state"];
 	var state = generateRandomString(4);
 	var authorizeURL = spotifyApi.createAuthorizeURL(scopes, state);
-	console.log("authorizing new host user");
 	res.redirect(authorizeURL);
 });
 

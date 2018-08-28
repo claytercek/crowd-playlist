@@ -1,19 +1,19 @@
 .Search {
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
 	right: 0;
 	padding: 0.5rem 0.8rem;
-	background-color: #24233bee;
+	background-color: #24233b00;
 	z-index: 6;
 	color: white;
 	height: 46px;
-	transition: height 0.3s ease;
+	transition: background-color 0.2s ease;
 }
 
 .Search.active {
-	height: 100%;
-	overflow: scroll;
+	min-height: 100%;
+	background-color: #24233b;
 }
 
 .Search .inputBar {
@@ -23,6 +23,7 @@
 	right: 0;
 	padding: 0.5rem 0.8rem;
 	background-color: #24233bee;
+	z-index: 10;
 }
 
 .Search .inputBar input {
@@ -59,6 +60,15 @@
 	list-style: none;
 }
 
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
 .Search li {
 	border-bottom: 1px solid rgba(255, 255, 255, 0.4);
 	height: 65px;
@@ -66,6 +76,17 @@
 	flex-flow: column wrap;
 	align-content: flex-start;
 	justify-content: center;
+	cursor: pointer;
+	animation: fadeIn 0.2s;
+}
+
+.Search li.focused,
+.Search li:hover {
+	background-color: #939aff22;
+}
+
+.Search li:active {
+	background-color: #0507115b;
 }
 
 .Search li img {

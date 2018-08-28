@@ -33,7 +33,6 @@ const exportedApi = function(io, spotifyApi) {
 
 	// websocket connection
 	io.on("connection", function(socket) {
-		console.log("socket connected:", socket.id);
 		// for all socket messages from redux/socket.io
 		socket.on("queueTrack", (trackId, group, userId, name) => {
 			//using track id, get all info about track from spotify
@@ -61,6 +60,9 @@ const exportedApi = function(io, spotifyApi) {
 		});
 
 		socket.on("groupJoin", (data, isHost) => {
+			if (!data) {
+				return;
+			}
 			console.log("socket", socket.id, "is joining room", data);
 			// if user is host
 			if (isHost) {

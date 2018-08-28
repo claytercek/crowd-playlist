@@ -3,7 +3,8 @@ import { UPDATE_TOKEN_SUCCESS, GROUP_JOIN, SET_HOST_TOKEN, SET_NAME } from "../a
 const initialState = {
 	expires_in: null,
 	access_token: null,
-	group: null
+	group: null,
+	host_token: null
 };
 
 var generateRandomString = function(length) {
