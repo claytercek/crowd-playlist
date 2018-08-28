@@ -16,6 +16,18 @@ var generateRandomString = function(length) {
 	return text;
 };
 
+var getId = () => {
+	if (localStorage.getItem("user_id")) {
+		return localStorage.getItem("user_id");
+	} else {
+		var id = generateRandomString(10);
+		localStorage.setItem("user_id", id);
+		console.log("assigning user_id:", id);
+		return id;
+	}
+};
+getId();
+
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case UPDATE_TOKEN_SUCCESS:
@@ -25,7 +37,7 @@ export default (state = initialState, action) => {
 		case SET_HOST_TOKEN:
 			return Object.assign({}, state, { host_token: action.token });
 		case SET_NAME:
-			return Object.assign({}, state, { user_id: generateRandomString(10), name: action.name });
+			return Object.assign({}, state, { user_id: getId(), name: action.name });
 		default:
 			return state;
 	}
