@@ -14,7 +14,9 @@ export const updateToken = () => dispatch => {
 	})
 		.then(res => res.json(), error => console.log("Error fetching token.", error))
 		.then(res => {
-			dispatch(updateTokenSuccess(res.access_token, res.expires_in));
+			if (res) {
+				dispatch(updateTokenSuccess(res.access_token, res.expires_in));
+			}
 		});
 };
 

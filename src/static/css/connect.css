@@ -51,6 +51,7 @@ input[type="submit"]:active {
 
 button,
 input {
+	-webkit-appearance: none;
 	width: 233px;
 	height: 52.98px;
 	border-radius: 500px;
@@ -117,6 +118,7 @@ input:-moz-ui-invalid {
 .panel img {
 	transform: translateY(-200px);
 	opacity: 0;
+	pointer-events: none;
 	transition: all 0.3s ease-in;
 }
 
