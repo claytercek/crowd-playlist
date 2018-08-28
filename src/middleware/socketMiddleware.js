@@ -44,7 +44,7 @@ export function socketMiddleware(store) {
 export default function(store) {
 	socket = io.connect(
 		apiUrl,
-		{ forceNew: true }
+		{ reconnection: true, reconnectionDelay: 500, maxReconnectionAttempts: Infinity }
 	);
 
 	socket.on("updateQueue", () => {
