@@ -21,7 +21,7 @@ class Queue {
 
 	enqueue(track) {
 		this.trackQueue.push(track);
-		if (this.nowPlaying.track === null) {
+		if (this.nowPlaying.track == null) {
 			this.play();
 		}
 	}

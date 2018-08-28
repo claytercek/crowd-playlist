@@ -42,7 +42,10 @@ export function socketMiddleware(store) {
 	};
 }
 export default function(store) {
-	socket = io.connect(apiUrl);
+	socket = io.connect(
+		apiUrl,
+		{ forceNew: true }
+	);
 
 	socket.on("updateQueue", () => {
 		store.dispatch(fetchQueue());
