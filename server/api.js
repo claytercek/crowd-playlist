@@ -6,6 +6,16 @@ globalSocket = null;
 queueContainer = {};
 hostContainer = {};
 
+var generateRandomString = function(length) {
+	var text = "";
+	var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+	for (var i = 0; i < length; i++) {
+		text += possible.charAt(Math.floor(Math.random() * possible.length));
+	}
+	return text;
+};
+
 const exportedApi = function(io, spotifyApi) {
 	let api = Router();
 
@@ -38,7 +48,8 @@ const exportedApi = function(io, spotifyApi) {
 							negative: [],
 							value: 1
 						},
-						enqueueTime: new Date()
+						enqueueTime: new Date(),
+						id: generateRandomString(10)
 					});
 					// tell all users in group to update queue
 					io.to(group).emit("updateQueue");

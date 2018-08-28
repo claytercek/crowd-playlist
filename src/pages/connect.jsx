@@ -69,7 +69,7 @@ export default class Connect extends Component {
 							Back
 						</button>
 						<label>group id</label>
-						<input type="text" pattern="[A-Z]{4}" required onChange={this.updateGroupInput} />
+						<input type="text" pattern="[A-Za-z]{4}" required onChange={this.updateGroupInput} />
 						<label>nickname</label>
 						<input type="text" required onChange={this.updateNameInput} />
 						<input type="submit" value="enter" />

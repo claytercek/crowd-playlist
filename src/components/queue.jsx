@@ -8,7 +8,7 @@ class Queue extends Component {
 	render() {
 		return (
 			<FlipMove typeName="ul" className="Queue">
-				{this.props.items.length > 0 && this.props.items.map((track, index) => <QueueItem key={track.track.id} index={index} voters={track.voters} track={track.track} />)}
+				{this.props.items.length > 0 && this.props.items.map((track, index) => <QueueItem key={track.id} index={index} voters={track.voters} track={track.track} />)}
 			</FlipMove>
 		);
 	}
