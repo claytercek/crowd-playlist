@@ -3,6 +3,7 @@ import { fetchQueue, fetchNowPlaying } from "../actions/queueActions";
 import { playTrack } from "../actions/playbackActions";
 import { apiUrl } from "../constants/constants";
 import io from "socket.io-client";
+import { groupJoin } from "../actions/sessionActions";
 
 var socket = null;
 
@@ -46,6 +47,12 @@ export default function(store) {
 		apiUrl,
 		{ "reconnection limit": 3000, "max reconnection attempts": Number.MAX_VALUE, "connect timeout": 7000 }
 	);
+
+	socket.on("reconnect", () => {
+		console.log("RECONNECTED");
+		var groupId = store.getState().session.group;
+		socket.emit("groupJoin", groupId, false);
+	});
 
 	socket.on("updateQueue", () => {
 		console.log("fetching queue");
