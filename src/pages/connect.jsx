@@ -45,7 +45,6 @@ export default class Connect extends Component {
 
 	handleSubmit = e => {
 		e.preventDefault();
-		console.dir(this.state);
 		this.setState({
 			formSubmitted: true
 		});
@@ -53,7 +52,7 @@ export default class Connect extends Component {
 
 	render() {
 		if (this.state.formSubmitted) {
-			return <Redirect push to={"/guest/" + this.state.groupInput + "/" + this.state.nameInput} />;
+			return <Redirect push to={"/guest/" + this.state.groupInput.toUpperCase() + "/" + this.state.nameInput} />;
 		}
 		return (
 			<div className="connect">
@@ -70,7 +69,7 @@ export default class Connect extends Component {
 							Back
 						</button>
 						<label>group id</label>
-						<input type="text" required onChange={this.updateGroupInput} />
+						<input type="text" pattern="[A-Z]{4}" required onChange={this.updateGroupInput} />
 						<label>nickname</label>
 						<input type="text" required onChange={this.updateNameInput} />
 						<input type="submit" value="enter" />

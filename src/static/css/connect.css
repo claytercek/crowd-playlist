@@ -8,6 +8,7 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	overflow: hidden;
 }
 
 div.connect {
@@ -68,6 +69,10 @@ input[type="text"] {
 	margin-bottom: 0.5rem;
 	color: #24233b;
 	font-family: Raleway, sans-serif;
+}
+
+input[type="text"]:first-of-type {
+	text-transform: uppercase;
 }
 
 input[type="submit"] {
