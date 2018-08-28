@@ -23,6 +23,7 @@ const exportedApi = function(io, spotifyApi) {
 
 	// websocket connection
 	io.on("connection", function(socket) {
+		console.log("socket connected:", socket.id);
 		// for all socket messages from redux/socket.io
 		socket.on("queueTrack", (trackId, group, userId, name) => {
 			//using track id, get all info about track from spotify
