@@ -8,6 +8,7 @@ class Queue {
 		this.trackQueue = [];
 		this.onPlay = options.onPlay;
 		this.onVote = options.onVote;
+		this.onQueueEmpty = options.onQueueEmpty;
 	}
 
 	// Accessor Methods
@@ -97,6 +98,7 @@ class Queue {
 				startTimestamp: null,
 				user: null
 			};
+			this.onQueueEmpty();
 			return;
 		}
 

@@ -1,10 +1,12 @@
 const Router = require("express").Router;
 const Queue = require("./queue");
 
-globalSocket = null;
+var globalSocket = null;
 
-queueContainer = {};
-hostContainer = {};
+var rooms = {};
+var socketRooms = {
+	//Socket ID : group ID
+};
 
 var generateRandomString = function(length) {
 	var text = "";
@@ -22,13 +24,13 @@ const exportedApi = function(io, spotifyApi) {
 	api.get("/queue/:group", (req, res) => {
 		const { group } = req.params;
 		//get queue for given group
-		res.json(queueContainer[group].getTrackQueue());
+		res.json(rooms[group].queue.getTrackQueue());
 	});
 
 	api.get("/nowPlaying/:group", (req, res) => {
 		const { group } = req.params;
 		//get queue for given group
-		res.json(queueContainer[group].getNowPlaying());
+		res.json(rooms[group].queue.getNowPlaying());
 	});
 
 	// websocket connection
@@ -40,7 +42,7 @@ const exportedApi = function(io, spotifyApi) {
 				function(data) {
 					console.log("adding track to " + group + " queue: " + data.body.name);
 					//add to group queue
-					queueContainer[group].enqueue({
+					rooms[group].queue.enqueue({
 						track: data.body,
 						voters: {
 							positive: [userId],
@@ -48,7 +50,8 @@ const exportedApi = function(io, spotifyApi) {
 							value: 1
 						},
 						enqueueTime: new Date(),
-						id: generateRandomString(10)
+						id: generateRandomString(10),
+						user: name
 					});
 					// tell all users in group to update queue
 					io.to(group).emit("updateQueue");
@@ -63,45 +66,77 @@ const exportedApi = function(io, spotifyApi) {
 			if (!data) {
 				return;
 			}
-			console.log("socket", socket.id, "is joining room", data);
+
 			// if user is host
 			if (isHost) {
-				//Set user to host of new group
-				hostContainer[data] = socket.id;
-				//Create new instance of queue object
-				queueContainer[data] = new Queue({
-					onPlay: () => {
-						const { track } = queueContainer[data].getNowPlaying();
-						// if there is a host, emit to only that host
-						hostContainer[data] && io.to(hostContainer[data]).emit("play track", track);
-						hostContainer[data] && io.to(data).emit("updateNowPlaying");
-					},
-					onVote: () => {
-						hostContainer[data] && io.to(data).emit("updateQueue");
-					}
-				});
-				console.log("Creating Queue for group " + data);
+				if (rooms[data]) {
+					console.log(data, "host reconnect");
+					rooms[data].host = socket.id;
+				} else {
+					//Set user to host of new group
+					rooms[data] = {
+						host: socket.id,
+						queue: new Queue({
+							onPlay: () => {
+								const { track } = rooms[data].queue.getNowPlaying();
+								// if there is a host, emit to only that host
+								rooms[data] && io.to(rooms[data].host).emit("play track", track);
+								rooms[data] && io.to(data).emit("updateNowPlaying");
+							},
+							onVote: () => {
+								rooms[data] && io.to(data).emit("updateQueue");
+							},
+							onQueueEmpty: () => {
+								// delete room if no more host
+								if (rooms[data].host == null) {
+									delete rooms[data];
+									console.log("deleting room", data);
+								}
+							}
+						})
+					};
+					console.log("Creating Queue for group " + data);
+				}
+			} else {
+				if (!rooms[data]) {
+					console.log("room doesn't exist");
+					socket.emit("server error", "room doesn't exist");
+					return;
+				}
 			}
+			console.log("socket", socket.id, "is joining room", data);
 			socket.join(data);
+			socketRooms[socket.id] = data;
 			// Now that they're in the group, have them update their local queue
 			// socket.emit("updateQueue");
 			socket.emit("updateNowPlaying");
 		});
 
 		socket.on("voteUp", (trackIndex, group, user_id) => {
-			queueContainer[group].voteUp(trackIndex, user_id);
+			rooms[group].queue.voteUp(trackIndex, user_id);
+			console.dir(socket.rooms);
 		});
 
 		socket.on("voteDown", (trackIndex, group, user_id) => {
-			queueContainer[group].voteDown(trackIndex, user_id);
+			rooms[group].queue.voteDown(trackIndex, user_id);
 		});
 
 		socket.on("voteNeutral", (trackIndex, group, user_id) => {
-			console.log(trackIndex, group, user_id);
-			queueContainer[group].voteNeutral(trackIndex, user_id);
+			rooms[group].queue.voteNeutral(trackIndex, user_id);
 		});
 
-		//TODO: handle socket disconnections: delete queue if host disconnects, force out all users  in that group
+		socket.on("disconnect", function() {
+			// if user is host of group, set group host to null
+			let group = socketRooms[socket.id];
+			if (group) {
+				if (rooms[group].host == socket.id) {
+					rooms[group].host = null;
+				}
+
+				//delete user from socketRooms
+				delete socketRooms[socket.id];
+			}
+		});
 	});
 
 	return api;
