@@ -75,14 +75,14 @@ export class QueueItem extends Component {
 	render() {
 		const title = this.props.track.name;
 		const artist = this.props.track.artists[0].name;
-		// const album = this.props.track.album.name;
-		// const length = this.props.track.duration_ms;
+		const album = this.props.track.album.name;
+		const length = this.props.track.duration_ms;
 		return (
 			<li>
 				<h2 className="title">{title}</h2>
 				<h3 className="artist">{artist}</h3>
-				{/* <p className="album">{album}</p> */}
-				{/* <p className="length">{msToTime(length)}</p> */}
+				<h3 className="album">{album}</h3>
+				<h3 className="length">{msToTime(length)}</h3>
 				<Vote index={this.props.index} userId={this.props.user_id} voters={this.props.voters} voteUp={this.props.voteUp} voteDown={this.props.voteDown} voteNeutral={this.props.voteNeutral} />
 			</li>
 		);
