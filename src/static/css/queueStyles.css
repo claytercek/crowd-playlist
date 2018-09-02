@@ -84,6 +84,8 @@
 
 @media screen and (min-width: 480px) {
 	.Queue li {
+		padding: 0.3rem 0rem;
+		margin: 0 0.8rem;
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
@@ -111,7 +113,7 @@
 
 	.QueueHeader .length,
 	.Queue .length {
-		width: 3rem;
+		width: 3.1rem;
 		text-align: right;
 	}
 
@@ -122,5 +124,10 @@
 		align-items: center;
 		justify-content: space-between;
 		border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+	}
+
+	.QueueHeader * {
+		font-weight: 500 !important;
+		opacity: 1 !important;
 	}
 }

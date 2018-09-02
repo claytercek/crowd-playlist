@@ -4,6 +4,18 @@ import { searchTracks, resetSearch } from "../actions/searchActions";
 import { queueTrack } from "../actions/queueActions";
 import "../static/css/searchStyles.css";
 
+function msToTime(s) {
+	var ms = s % 1000;
+	s = (s - ms) / 1000;
+	var secs = s % 60;
+	s = (s - secs) / 60;
+	var mins = s % 60;
+	if (secs < 10) {
+		secs = "0" + secs;
+	}
+	return mins + ":" + secs;
+}
+
 class SearchResults extends Component {
 	render() {
 		const { results, focus } = this.props;
@@ -16,8 +28,10 @@ class SearchResults extends Component {
 						<li key={result.id} className={className} onClick={() => this.props.onSelect(result.id)}>
 							{result.album.images[2] && <img src={result.album.images[2].url} alt="album cover" />}
 							<div>
-								<h3>{result.name}</h3>
-								<h4>{result.artists[0].name}</h4>
+								<h3 className="title">{result.name}</h3>
+								<h4 className="artist">{result.artists[0].name}</h4>
+								<h4 className="album">{result.album.name}</h4>
+								<h4 className="length">{msToTime(result.duration_ms)}</h4>
 							</div>
 						</li>
 					);

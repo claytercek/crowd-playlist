@@ -70,3 +70,9 @@ div.NowPlaying {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+
+@media screen and (min-width: 600px) {
+	.NowPlaying .wave {
+		background: url("../imgs/desktop-wave.svg") no-repeat;
+	}
+}

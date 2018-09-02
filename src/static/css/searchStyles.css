@@ -117,3 +117,38 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+
+.Search li div .album,
+.Search li div .length {
+	display: none;
+}
+
+@media screen and (min-width: 480px) {
+	.Search li div {
+		display: flex;
+		width: 90%;
+		align-content: center;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.Search li div .album,
+	.Search li div .length {
+		display: block;
+	}
+
+	.Search li div * {
+		width: 22%;
+		margin-left: 0.5rem;
+		flex-grow: 1;
+		font-size: 16px;
+	}
+
+	.Search li div .length {
+		width: 3rem;
+	}
+
+	.Search li div .title {
+		width: 35%;
+	}
+}
