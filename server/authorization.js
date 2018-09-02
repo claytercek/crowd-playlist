@@ -87,7 +87,7 @@ auth.get("/callback", function(req, res) {
 
 				/* Redirecting back to the main page and include hash parameters*/
 
-				if (process.env.NODE_ENV == "development") {
+				if (process.env.NODE_ENV == "production") {
 					res.redirect("/host/" + state + "/" + access_token);
 				} else {
 					res.redirect("http://localhost:3000/host/" + state + "/" + access_token);
