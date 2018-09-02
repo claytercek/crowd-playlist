@@ -23,7 +23,7 @@
 	},
 	"scripts": {
 		"client": "react-scripts start",
-		"server": "nodemon server/server.js",
+		"server": "NODE_ENV=development nodemon server/server.js",
 		"dev": "concurrently \"yarn server\" \"yarn client\" ",
 		"start": "node server/server.js",
 		"build": "react-scripts build",

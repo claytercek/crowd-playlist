@@ -10,8 +10,9 @@ class NowPlaying extends Component {
 					<div className="wave" />
 					<div className="trackInfo">
 						<h2>{this.props.track.name}</h2>
-						<h3>{this.props.track.artists[0].name}</h3>
-						{/* <h3>{this.props.track.album.name}</h3> */}
+						<h3>
+							{this.props.track.artists[0].name}, added by {this.props.user}
+						</h3>
 					</div>
 					<img className="trackImg" src={this.props.track.album.images[1].url} alt={this.props.track.album.name} />
 				</div>

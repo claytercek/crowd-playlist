@@ -107,7 +107,7 @@ class Queue {
 		this.nowPlaying = {
 			track: newTrack.track,
 			startTimestamp: new Date(),
-			user: "clay"
+			user: newTrack.user
 		};
 		setTimeout(() => {
 			this.play();

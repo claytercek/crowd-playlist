@@ -11,7 +11,6 @@ import "./static/css/fonts.css";
 
 const store = initStore();
 
-// store.dispatch(fetchQueue());
 ReactDOM.render(
 	<Provider store={store}>
 		<App />

@@ -86,8 +86,12 @@ auth.get("/callback", function(req, res) {
 				// spotifyApi.setAccessToken(access_token);
 
 				/* Redirecting back to the main page and include hash parameters*/
-				console.log("NODE_ENV", process.env.NODE_ENV);
-				res.redirect("/host/" + state + "/" + access_token);
+
+				if (process.env.NODE_ENV == "development") {
+					res.redirect("/host/" + state + "/" + access_token);
+				} else {
+					res.redirect("http://localhost:3000/host/" + state + "/" + access_token);
+				}
 			},
 			function(err) {
 				res.status(err.code);
