@@ -157,6 +157,11 @@ input:-moz-ui-invalid {
 	font-weight: 600;
 }
 
+.connect .text strong a {
+	font-weight: 600;
+	color: white;
+}
+
 .connect .text h1 {
 	font-size: 2.5rem;
 	font-weight: 800;

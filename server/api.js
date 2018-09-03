@@ -101,7 +101,7 @@ const exportedApi = function(io, spotifyApi) {
 			} else {
 				if (!rooms[data]) {
 					console.log("room doesn't exist");
-					socket.emit("room error", "room doesn't exist");
+					socket.emit("room error", "room doesn't exist", true);
 					return;
 				}
 			}

@@ -85,7 +85,11 @@ export default class Connect extends Component {
 						To join an already existing room, simply click <strong>join room</strong> on the left, and type in the group id from the host’s screen and a nickname for yourself.
 					</p>
 					<p>
-						This is a personal project by Clay Tercek. Click <strong>here</strong> to learn more.
+						This is a personal project by Clay Tercek. Click{" "}
+						<strong>
+							<a href="https://github.com/claytercek/crowd-playlist">here</a>
+						</strong>{" "}
+						to learn more.
 					</p>
 				</div>
 				{/* <Link to={`guest/${this.state.groupInput}`}>

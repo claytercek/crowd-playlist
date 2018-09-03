@@ -80,5 +80,12 @@ export default function(store) {
 		store.dispatch(playTrack(track));
 	});
 
+	socket.on("room error", (error, redirect) => {
+		alert(error);
+		if (redirect) {
+			window.location.href = "/";
+		}
+	});
+
 	// todo: manage end song, end queue
 }
