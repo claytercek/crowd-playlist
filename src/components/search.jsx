@@ -95,6 +95,10 @@ class Search extends Component {
 				}
 				break;
 			}
+			case 27: {
+				this.setSearchInactive();
+				break;
+			}
 		}
 	};
 
@@ -109,7 +113,7 @@ class Search extends Component {
 	};
 
 	render() {
-		const placeHolder = "Search for tracks to add";
+		const placeHolder = "Search for tracks";
 		const results = this.props.search.results;
 		var SearchClass = this.state.searchActive ? "active" : "";
 		return (
@@ -118,6 +122,7 @@ class Search extends Component {
 					<img id="searchIcon" src={require("../static/imgs/search.svg")} alt="search icon" />
 					<input onClick={this.setSearchActive} placeholder={placeHolder} onChange={this.handleTextChange} onKeyDown={this.handleKeyDown} ref={el => (this.input = el)} />
 					{this.state.searchActive && <img id="closeIcon" src={require("../static/imgs/cancel.svg")} alt="close icon" onClick={this.setSearchInactive} />}
+					<h3>{this.props.group}</h3>
 				</div>
 				{results && <SearchResults results={results} onSelect={this.selectElement} focus={this.state.focus} />}
 			</div>

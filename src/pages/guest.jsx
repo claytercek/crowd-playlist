@@ -20,14 +20,16 @@ class Guest extends Component {
 			<div className="playlist">
 				<Search />
 				<NowPlaying />
-				<Queue />
+				{this.props.queue.length > 0 && <Queue />}
 			</div>
 		);
 	}
 }
 
 const mapStateToProps = state => {
-	return {};
+	return {
+		queue: state.queue
+	};
 };
 
 const mapDispatchToProps = dispatch => ({

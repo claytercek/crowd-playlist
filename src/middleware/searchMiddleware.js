@@ -18,7 +18,7 @@ export default store => next => action => {
 			}
 			const wildcardQuery = `${query}${shouldAddWildcard ? "*" : ""}`; // Trick to improve search results
 
-			return fetch(`${SPOTIFY_API_BASE}/search?q=${encodeURIComponent(wildcardQuery)}&type=track&limit=10`, {
+			return fetch(`${SPOTIFY_API_BASE}/search?q=${encodeURIComponent(wildcardQuery)}&type=track&limit=15`, {
 				headers: {
 					Authorization: "Bearer " + store.getState().session.access_token
 				}

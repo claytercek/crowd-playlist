@@ -15,10 +15,14 @@ class NowPlaying extends Component {
 						</h3>
 					</div>
 					<img className="trackImg" src={this.props.track.album.images[1].url} alt={this.props.track.album.name} />
+					<h3>{this.props.group}</h3>
 				</div>
 			)) || (
-				<div className="NowPlaying">
+				<div className="NowPlaying inactive">
 					<div className="wave" />
+					<h4>
+						group id: <span>{this.props.group}</span>
+					</h4>
 				</div>
 			)
 		);
@@ -28,7 +32,8 @@ class NowPlaying extends Component {
 const mapStateToProps = state => ({
 	track: state.nowPlaying.track,
 	user: state.nowPlaying.user,
-	startTimestamp: state.nowPlaying.startTimestamp
+	startTimestamp: state.nowPlaying.startTimestamp,
+	group: state.session.group
 });
 
 export default connect(mapStateToProps)(NowPlaying);

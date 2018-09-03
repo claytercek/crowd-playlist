@@ -3,7 +3,7 @@
 	top: 0;
 	left: 0;
 	right: 0;
-	padding: 0.5rem 0.8rem;
+	padding: 0.5rem 0.5rem;
 	background-color: #24233b00;
 	z-index: 6;
 	color: white;
@@ -21,20 +21,29 @@
 	top: 0;
 	left: 0;
 	right: 0;
-	padding: 0.5rem 0.8rem;
+	padding: 0.5rem 0.5rem;
 	background-color: #24233bee;
 	z-index: 10;
+	display: flex;
+	align-content: center;
+	justify-content: space-between;
 }
 
 .Search .inputBar input {
 	border: none;
 	background-color: white;
 	height: 30px;
-	width: 100%;
+	width: calc(100% - 4.9rem);
 	font-size: 16px;
 	font-weight: 400;
 	padding: 0 2rem;
 	color: #24233b;
+}
+
+.Search .inputBar h3 {
+	display: inline;
+	font-size: 1.6rem;
+	margin: 0;
 }
 
 .Search .inputBar img {
@@ -46,7 +55,7 @@
 }
 
 .Search #closeIcon {
-	right: 1.1rem;
+	right: 5.8rem;
 }
 
 .Search #searchIcon {
@@ -150,5 +159,17 @@
 
 	.Search li div .title {
 		width: 35%;
+	}
+
+	.Search .inputBar h3 {
+		display: none;
+	}
+
+	.Search .inputBar input {
+		width: 100%;
+	}
+
+	.Search .inputBar #closeIcon {
+		right: 0.9rem;
 	}
 }

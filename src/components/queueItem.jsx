@@ -79,11 +79,12 @@ export class QueueItem extends Component {
 		const length = this.props.track.duration_ms;
 		return (
 			<li>
+				<Vote index={this.props.index} userId={this.props.user_id} voters={this.props.voters} voteUp={this.props.voteUp} voteDown={this.props.voteDown} voteNeutral={this.props.voteNeutral} />
 				<h2 className="title">{title}</h2>
 				<h3 className="artist">{artist}</h3>
 				<h3 className="album">{album}</h3>
 				<h3 className="length">{msToTime(length)}</h3>
-				<Vote index={this.props.index} userId={this.props.user_id} voters={this.props.voters} voteUp={this.props.voteUp} voteDown={this.props.voteDown} voteNeutral={this.props.voteNeutral} />
+				<h3 className="user">{this.props.user}</h3>
 			</li>
 		);
 	}

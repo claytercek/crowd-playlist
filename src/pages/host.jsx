@@ -21,14 +21,17 @@ class Host extends Component {
 			<div className="playlist">
 				<Search />
 				<NowPlaying />
-				<Queue />
+				{this.props.queue.length <= 0 && <p className="hostWarning">in order for crowd to function correctly, please leave this page open on your device.</p>}
+				{this.props.queue.length > 0 && <Queue />}
 			</div>
 		);
 	}
 }
 
 const mapStateToProps = state => {
-	return {};
+	return {
+		queue: state.queue
+	};
 };
 
 const mapDispatchToProps = dispatch => ({

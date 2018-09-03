@@ -87,6 +87,7 @@ const exportedApi = function(io, spotifyApi) {
 								rooms[data] && io.to(data).emit("updateQueue");
 							},
 							onQueueEmpty: () => {
+								rooms[data] && io.to(data).emit("updateNowPlaying");
 								// delete room if no more host
 								if (rooms[data].host == null) {
 									delete rooms[data];
