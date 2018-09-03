@@ -19,6 +19,33 @@ export default store => next => action => {
 			})
 				.then(res => res.json())
 				.then(res => console.log(res));
+		case types.PAUSE:
+			return fetch(`${SPOTIFY_API_BASE}/me/player/pause`, {
+				method: "PUT",
+				headers: {
+					Authorization: "Bearer " + store.getState().session.host_token
+				}
+			})
+				.then(res => res.json())
+				.then(res => console.log(res));
+		case types.SKIP:
+			return fetch(`${SPOTIFY_API_BASE}/me/player/pause`, {
+				method: "PUT",
+				headers: {
+					Authorization: "Bearer " + store.getState().session.host_token
+				}
+			})
+				.then(res => res.json())
+				.then(res => console.log(res));
+		case types.RESUME:
+			return fetch(`${SPOTIFY_API_BASE}/me/player/play`, {
+				method: "PUT",
+				headers: {
+					Authorization: "Bearer " + store.getState().session.host_token
+				}
+			})
+				.then(res => res.json())
+				.then(res => console.log(res));
 		default:
 			break;
 	}

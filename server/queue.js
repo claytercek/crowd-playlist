@@ -9,6 +9,28 @@ class Queue {
 		this.onPlay = options.onPlay;
 		this.onVote = options.onVote;
 		this.onQueueEmpty = options.onQueueEmpty;
+		this.Timer = null;
+		this.startTime = null;
+		this.timeRemaining = null;
+		this.timerState = 0; //  0 = idle, 1 = running, 2 = paused, 3= resumed
+		this.timerInterval = null;
+	}
+
+	pauseTimer() {
+		if (this.timerState != 1) return;
+		console.log("pause");
+		this.timeRemaining = this.timerInterval - (new Date() - this.startTime);
+		clearTimeout(this.Timer);
+		this.timerState = 2;
+	}
+
+	resumeTimer() {
+		if (this.timerState != 2) return;
+		console.log("resume");
+		this.timerState = 3;
+		this.Timer = setTimeout(() => {
+			this.play();
+		}, this.timeRemaining);
 	}
 
 	// Accessor Methods
@@ -109,9 +131,13 @@ class Queue {
 			startTimestamp: new Date(),
 			user: newTrack.user
 		};
-		setTimeout(() => {
+
+		this.startTime = new Date();
+		this.timerState = 1;
+		this.timerInterval = 1000 + newTrack.track.duration_ms;
+		this.Timer = setTimeout(() => {
 			this.play();
-		}, 1000 + newTrack.track.duration_ms);
+		}, this.timerInterval);
 
 		// call socket functions from api.js
 		this.onPlay();

@@ -1,4 +1,4 @@
-import { QUEUE_TRACK, GROUP_JOIN, VOTE_UP, VOTE_DOWN, VOTE_NEUTRAL } from "../actions/actionTypes";
+import { QUEUE_TRACK, GROUP_JOIN, VOTE_UP, VOTE_DOWN, VOTE_NEUTRAL, PAUSE, RESUME, SKIP } from "../actions/actionTypes";
 import { fetchQueue, fetchNowPlaying } from "../actions/queueActions";
 import { playTrack } from "../actions/playbackActions";
 import { apiUrl } from "../constants/constants";
@@ -32,6 +32,18 @@ export function socketMiddleware(store) {
 				}
 				case GROUP_JOIN: {
 					socket.emit("groupJoin", action.groupID, action.isHost);
+					break;
+				}
+				case PAUSE: {
+					socket.emit("pause", session.group);
+					break;
+				}
+				case RESUME: {
+					socket.emit("resume", session.group);
+					break;
+				}
+				case SKIP: {
+					socket.emit("skip", session.group);
 					break;
 				}
 				default:

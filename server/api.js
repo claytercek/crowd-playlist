@@ -126,6 +126,18 @@ const exportedApi = function(io, spotifyApi) {
 			rooms[group].queue.voteNeutral(trackIndex, user_id);
 		});
 
+		socket.on("pause", group => {
+			rooms[group].queue.pauseTimer();
+		});
+
+		socket.on("resume", group => {
+			rooms[group].queue.resumeTimer();
+		});
+
+		socket.on("skip", group => {
+			rooms[group].queue.play();
+		});
+
 		socket.on("disconnect", function() {
 			// if user is host of group, set group host to null
 			let group = socketRooms[socket.id];

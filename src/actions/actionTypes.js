@@ -27,3 +27,7 @@ export const SET_NAME = "SET_NAME";
 export const VOTE_UP = "VOTE_UP";
 export const VOTE_DOWN = "VOTE_DOWN";
 export const VOTE_NEUTRAL = "VOTE_NEUTRAL";
+
+export const PAUSE = "PAUSE";
+export const RESUME = "RESUME";
+export const SKIP = "SKIP";
