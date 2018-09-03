@@ -104,7 +104,7 @@ div.NowPlaying > h3 {
 	.NowPlaying .wave {
 		background: url("../imgs/desktop_wave.svg") no-repeat;
 		height: 5vw;
-		top: -3.5vw;
+		top: -3vw;
 		background-size: 150% 150%;
 	}
 }
