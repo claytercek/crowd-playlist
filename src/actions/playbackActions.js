@@ -21,3 +21,7 @@ export const resume = () => ({
 export const skip = () => ({
 	type: types.SKIP
 });
+
+export const clear = () => ({
+	type: types.CLEAR
+});

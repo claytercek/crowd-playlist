@@ -138,6 +138,16 @@ const exportedApi = function(io, spotifyApi) {
 			rooms[group].queue.play();
 		});
 
+		socket.on("clear", group => {
+			console.log("clear");
+			rooms[group].queue.nowPlaying = {
+				track: null,
+				startTimestamp: null,
+				user: null
+			};
+			io.to(group).emit("updateNowPlaying");
+		});
+
 		socket.on("disconnect", function() {
 			// if user is host of group, set group host to null
 			let group = socketRooms[socket.id];

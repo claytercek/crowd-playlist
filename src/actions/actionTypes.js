@@ -31,3 +31,4 @@ export const VOTE_NEUTRAL = "VOTE_NEUTRAL";
 export const PAUSE = "PAUSE";
 export const RESUME = "RESUME";
 export const SKIP = "SKIP";
+export const CLEAR = "CLEAR";
