@@ -132,12 +132,11 @@ class Queue {
 			user: newTrack.user
 		};
 
+		clearTimeout(this.Timer);
 		this.startTime = new Date();
 		this.timerState = 1;
 		this.timerInterval = 1000 + newTrack.track.duration_ms;
-		console.log(this.timerInterval);
 		this.Timer = setTimeout(() => {
-			console.log('song ended > playing');
 			this.play('song ended');
 		}, this.timerInterval);
 
