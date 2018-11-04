@@ -4,14 +4,14 @@ This website allows users to create "rooms" that connect to their spotify accoun
 
 This is a project I designed and developed with the intention of learning Node, react and redux. Using the spotify api, this webapp takes control of the users currently active spotify player.
 
-I learned a lot from looking at [José M. Pérez's c repo](https://github.com/JMPerez/c "c - JMPerez"), which does the same task on a slightly smaller scale.
+I learned a lot from looking at [José M. Pérez's c repo](https://github.com/JMPerez/c 'c - JMPerez'), which does the same task on a slightly smaller scale.
 
 ## Setting up
 
 Clone or download Repo:
 
 ```shell
-git clone https://github.com/claytercek/spotify.git
+git clone https://github.com/claytercek/crowd-playlist.git
 ```
 
 Copy .env to .env.local and replace dummy content with your content.

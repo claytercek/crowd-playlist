@@ -12,13 +12,13 @@ class Queue {
 		this.Timer = null;
 		this.startTime = null;
 		this.timeRemaining = null;
-		this.timerState = 0; //  0 = idle, 1 = running, 2 = paused, 3= resumed
+		this.timerState = 0; //  0 = idle, 1 = running, 2 = paused
 		this.timerInterval = null;
 	}
 
 	pauseTimer() {
 		if (this.timerState != 1) return;
-		console.log("pause");
+		console.log('pause');
 		this.timeRemaining = this.timerInterval - (new Date() - this.startTime);
 		clearTimeout(this.Timer);
 		this.timerState = 2;
@@ -26,8 +26,8 @@ class Queue {
 
 	resumeTimer() {
 		if (this.timerState != 2) return;
-		console.log("resume");
-		this.timerState = 3;
+		console.log('resume');
+		this.timerState = 1;
 		this.Timer = setTimeout(() => {
 			this.play();
 		}, this.timeRemaining);
@@ -45,6 +45,7 @@ class Queue {
 	enqueue(track) {
 		this.trackQueue.push(track);
 		if (this.nowPlaying.track == null) {
+			console.log('Queue empty > playing');
 			this.play();
 		}
 	}
@@ -112,9 +113,9 @@ class Queue {
 	}
 
 	play() {
-		console.log("api.js > play");
+		console.log('api.js > play');
 		if (this.trackQueue.length <= 0) {
-			console.log("nothing to play");
+			console.log('nothing to play');
 			this.nowPlaying = {
 				track: null,
 				startTimestamp: null,
@@ -135,7 +136,9 @@ class Queue {
 		this.startTime = new Date();
 		this.timerState = 1;
 		this.timerInterval = 1000 + newTrack.track.duration_ms;
+		console.log(this.timerInterval);
 		this.Timer = setTimeout(() => {
+			console.log('song ended > playing');
 			this.play();
 		}, this.timerInterval);
 

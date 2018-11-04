@@ -1,35 +1,36 @@
-import * as types from "../actions/actionTypes";
-import fetch from "cross-fetch";
-import { clear, playTrack } from "../actions/playbackActions";
+import * as types from '../actions/actionTypes';
+import fetch from 'cross-fetch';
+import { clear, playTrack } from '../actions/playbackActions';
 
 // import { playTrackSuccess } from "../actions/playbackActions";
 
-const SPOTIFY_API_BASE = "https://api.spotify.com/v1";
+const SPOTIFY_API_BASE = 'https://api.spotify.com/v1';
 
 export default store => next => action => {
 	const result = next(action);
 	switch (action.type) {
 		case types.PLAY_TRACK:
-			console.log("play track");
+			console.log('play track');
 			return fetch(`${SPOTIFY_API_BASE}/me/player/play`, {
-				method: "PUT",
+				method: 'PUT',
 				headers: {
-					Authorization: "Bearer " + store.getState().session.host_token
+					Authorization: 'Bearer ' + store.getState().session.host_token
 				},
-				body: JSON.stringify({ uris: ["spotify:track:" + action.track.id] })
+				body: JSON.stringify({ uris: ['spotify:track:' + action.track.id] })
 			})
 				.then(res => res.json())
 				.then(res => {
 					if (res.error) {
+						console.log(res.error.status);
 						switch (res.error.status) {
 							case 401: {
-								alert("Invalid Access token. Try recreating room.");
-								window.location.href = "/";
+								alert('Invalid Access token. Try recreating room.');
+								window.location.href = '/';
 								break;
 							}
 							case 403: {
 								alert("Sorry, because of the limitation's of spotify's api, only premium users can host with crowd.");
-								window.location.href = "/";
+								window.location.href = '/';
 								break;
 							}
 							case 404: {
@@ -46,18 +47,18 @@ export default store => next => action => {
 				});
 		case types.PAUSE:
 			return fetch(`${SPOTIFY_API_BASE}/me/player/pause`, {
-				method: "PUT",
+				method: 'PUT',
 				headers: {
-					Authorization: "Bearer " + store.getState().session.host_token
+					Authorization: 'Bearer ' + store.getState().session.host_token
 				}
 			})
 				.then(res => res.json())
 				.then(res => console.log(res));
 		case types.SKIP:
-			return fetch(`${SPOTIFY_API_BASE}/me/player/pause`, {
-				method: "PUT",
+			return fetch(`${SPOTIFY_API_BASE}/me/player/play`, {
+				method: 'PUT',
 				headers: {
-					Authorization: "Bearer " + store.getState().session.host_token
+					Authorization: 'Bearer ' + store.getState().session.host_token
 				}
 			})
 				.then(res => res.json())
@@ -66,7 +67,7 @@ export default store => next => action => {
 						switch (res.error.status) {
 							case 403: {
 								alert("Sorry, because of the limitation's of spotify's api, only premium users can host with crowd.");
-								window.location.href = "/";
+								window.location.href = '/';
 								break;
 							}
 							case 404: {
@@ -83,9 +84,9 @@ export default store => next => action => {
 				});
 		case types.RESUME:
 			return fetch(`${SPOTIFY_API_BASE}/me/player/play`, {
-				method: "PUT",
+				method: 'PUT',
 				headers: {
-					Authorization: "Bearer " + store.getState().session.host_token
+					Authorization: 'Bearer ' + store.getState().session.host_token
 				}
 			})
 				.then(res => res.json())
@@ -93,13 +94,13 @@ export default store => next => action => {
 					if (res.error) {
 						switch (res.error.status) {
 							case 401: {
-								alert("Invalid Access token. Try recreating room.");
-								window.location.href = "/";
+								alert('Invalid Access token. Try recreating room.');
+								window.location.href = '/';
 								break;
 							}
 							case 403: {
 								alert("Sorry, because of the limitation's of spotify's api, only premium users can host with crowd.");
-								window.location.href = "/";
+								window.location.href = '/';
 								break;
 							}
 							case 404: {

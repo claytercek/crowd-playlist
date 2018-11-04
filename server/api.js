@@ -1,5 +1,5 @@
-const Router = require("express").Router;
-const Queue = require("./queue");
+const Router = require('express').Router;
+const Queue = require('./queue');
 
 var globalSocket = null;
 
@@ -9,8 +9,8 @@ var socketRooms = {
 };
 
 var generateRandomString = function(length) {
-	var text = "";
-	var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	var text = '';
+	var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
 	for (var i = 0; i < length; i++) {
 		text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -21,26 +21,26 @@ var generateRandomString = function(length) {
 const exportedApi = function(io, spotifyApi) {
 	let api = Router();
 
-	api.get("/queue/:group", (req, res) => {
+	api.get('/queue/:group', (req, res) => {
 		const { group } = req.params;
 		//get queue for given group
 		res.json(rooms[group].queue.getTrackQueue());
 	});
 
-	api.get("/nowPlaying/:group", (req, res) => {
+	api.get('/nowPlaying/:group', (req, res) => {
 		const { group } = req.params;
 		//get queue for given group
 		res.json(rooms[group].queue.getNowPlaying());
 	});
 
 	// websocket connection
-	io.on("connection", function(socket) {
+	io.on('connection', function(socket) {
 		// for all socket messages from redux/socket.io
-		socket.on("queueTrack", (trackId, group, userId, name) => {
+		socket.on('queueTrack', (trackId, group, userId, name) => {
 			//using track id, get all info about track from spotify
 			spotifyApi.getTrack(trackId).then(
 				function(data) {
-					console.log("adding track to " + group + " queue: " + data.body.name);
+					console.log('adding track to ' + group + ' queue: ' + data.body.name);
 					//add to group queue
 					rooms[group].queue.enqueue({
 						track: data.body,
@@ -54,7 +54,7 @@ const exportedApi = function(io, spotifyApi) {
 						user: name
 					});
 					// tell all users in group to update queue
-					io.to(group).emit("updateQueue");
+					io.to(group).emit('updateQueue');
 				},
 				function(err) {
 					console.error(err);
@@ -62,7 +62,7 @@ const exportedApi = function(io, spotifyApi) {
 			);
 		});
 
-		socket.on("groupJoin", (data, isHost) => {
+		socket.on('groupJoin', (data, isHost) => {
 			if (!data) {
 				return;
 			}
@@ -70,7 +70,7 @@ const exportedApi = function(io, spotifyApi) {
 			// if user is host
 			if (isHost) {
 				if (rooms[data]) {
-					console.log(data, "host reconnect");
+					console.log(data, 'host reconnect');
 					rooms[data].host = socket.id;
 				} else {
 					//Set user to host of new group
@@ -80,75 +80,78 @@ const exportedApi = function(io, spotifyApi) {
 							onPlay: () => {
 								const { track } = rooms[data].queue.getNowPlaying();
 								// if there is a host, emit to only that host
-								rooms[data] && io.to(rooms[data].host).emit("play track", track);
-								rooms[data] && io.to(data).emit("updateNowPlaying");
+								rooms[data] && io.to(rooms[data].host).emit('play track', track);
+								rooms[data] && io.to(data).emit('updateNowPlaying');
 							},
 							onVote: () => {
-								rooms[data] && io.to(data).emit("updateQueue");
+								rooms[data] && io.to(data).emit('updateQueue');
 							},
 							onQueueEmpty: () => {
-								rooms[data] && io.to(data).emit("updateNowPlaying");
+								rooms[data] && io.to(data).emit('updateNowPlaying');
 								// delete room if no more host
-								if (rooms[data].host == null) {
+								if (!rooms[data]) {
 									delete rooms[data];
-									console.log("deleting room", data);
+									console.log('deleting room', data);
+								} else if (rooms[data].host == null) {
+									delete rooms[data];
+									console.log('deleting room', data);
 								}
 							}
 						})
 					};
-					console.log("Creating Queue for group " + data);
+					console.log('Creating Queue for group ' + data);
 				}
 			} else {
 				if (!rooms[data]) {
 					console.log("room doesn't exist");
-					socket.emit("room error", "room doesn't exist", true);
+					socket.emit('room error', "room doesn't exist", true);
 					return;
 				}
 			}
-			console.log("socket", socket.id, "is joining room", data);
+			console.log('socket', socket.id, 'is joining room', data);
 			socket.join(data);
 			socketRooms[socket.id] = data;
 			// Now that they're in the group, have them update their local queue
 			// socket.emit("updateQueue");
-			socket.emit("updateNowPlaying");
+			socket.emit('updateNowPlaying');
 		});
 
-		socket.on("voteUp", (trackIndex, group, user_id) => {
+		socket.on('voteUp', (trackIndex, group, user_id) => {
 			rooms[group].queue.voteUp(trackIndex, user_id);
-			console.dir(socket.rooms);
 		});
 
-		socket.on("voteDown", (trackIndex, group, user_id) => {
+		socket.on('voteDown', (trackIndex, group, user_id) => {
 			rooms[group].queue.voteDown(trackIndex, user_id);
 		});
 
-		socket.on("voteNeutral", (trackIndex, group, user_id) => {
+		socket.on('voteNeutral', (trackIndex, group, user_id) => {
 			rooms[group].queue.voteNeutral(trackIndex, user_id);
 		});
 
-		socket.on("pause", group => {
+		socket.on('pause', group => {
 			rooms[group].queue.pauseTimer();
 		});
 
-		socket.on("resume", group => {
+		socket.on('resume', group => {
 			rooms[group].queue.resumeTimer();
 		});
 
-		socket.on("skip", group => {
+		socket.on('skip', group => {
+			console.log('skip');
 			rooms[group].queue.play();
 		});
 
-		socket.on("clear", group => {
-			console.log("clear");
+		socket.on('clear', group => {
+			console.log('clear');
 			rooms[group].queue.nowPlaying = {
 				track: null,
 				startTimestamp: null,
 				user: null
 			};
-			io.to(group).emit("updateNowPlaying");
+			io.to(group).emit('updateNowPlaying');
 		});
 
-		socket.on("disconnect", function() {
+		socket.on('disconnect', function() {
 			// if user is host of group, set group host to null
 			let group = socketRooms[socket.id];
 			if (group) {
