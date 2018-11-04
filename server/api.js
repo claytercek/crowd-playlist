@@ -137,8 +137,7 @@ const exportedApi = function(io, spotifyApi) {
 		});
 
 		socket.on('skip', group => {
-			console.log('skip');
-			rooms[group].queue.play();
+			rooms[group].queue.play('skip');
 		});
 
 		socket.on('clear', group => {

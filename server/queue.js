@@ -29,7 +29,7 @@ class Queue {
 		console.log('resume');
 		this.timerState = 1;
 		this.Timer = setTimeout(() => {
-			this.play();
+			this.play('resume timer');
 		}, this.timeRemaining);
 	}
 
@@ -45,8 +45,7 @@ class Queue {
 	enqueue(track) {
 		this.trackQueue.push(track);
 		if (this.nowPlaying.track == null) {
-			console.log('Queue empty > playing');
-			this.play();
+			this.play('queue empty');
 		}
 	}
 
@@ -112,8 +111,8 @@ class Queue {
 		}
 	}
 
-	play() {
-		console.log('api.js > play');
+	play(reason) {
+		console.log('play > ' + reason);
 		if (this.trackQueue.length <= 0) {
 			console.log('nothing to play');
 			this.nowPlaying = {
@@ -139,7 +138,7 @@ class Queue {
 		console.log(this.timerInterval);
 		this.Timer = setTimeout(() => {
 			console.log('song ended > playing');
-			this.play();
+			this.play('song ended');
 		}, this.timerInterval);
 
 		// call socket functions from api.js
