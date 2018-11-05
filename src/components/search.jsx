@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { searchTracks, resetSearch } from "../actions/searchActions";
-import { queueTrack } from "../actions/queueActions";
-import "../static/css/searchStyles.css";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { searchTracks, resetSearch } from '../actions/searchActions';
+import { queueTrack } from '../actions/queueActions';
+import '../static/css/searchStyles.css';
 
 function msToTime(s) {
 	var ms = s % 1000;
@@ -11,9 +11,9 @@ function msToTime(s) {
 	s = (s - secs) / 60;
 	var mins = s % 60;
 	if (secs < 10) {
-		secs = "0" + secs;
+		secs = '0' + secs;
 	}
-	return mins + ":" + secs;
+	return mins + ':' + secs;
 }
 
 class SearchResults extends Component {
@@ -23,9 +23,9 @@ class SearchResults extends Component {
 			<ul>
 				{results.map((result, index) => {
 					const isFocused = focus === index;
-					const className = isFocused ? "focused" : "";
+					const className = isFocused ? 'focused' : '';
 					return (
-						<li key={result.id} className={className} onClick={() => this.props.onSelect(result.id)}>
+						<li key={result.id} className={className} onClick={() => this.props.onSelect(result.id)} onMouseOver={() => this.props.hoverFocus(index)}>
 							{result.album.images[2] && <img src={result.album.images[2].url} alt="album cover" />}
 							<div>
 								<h3 className="title">{result.name}</h3>
@@ -43,7 +43,7 @@ class SearchResults extends Component {
 
 class Search extends Component {
 	state = {
-		text: this.props.text || "",
+		text: this.props.text || '',
 		focus: -1,
 		searchActive: false
 	};
@@ -51,15 +51,21 @@ class Search extends Component {
 	selectElement = id => {
 		this.props.queueTrack(id, this.props.group);
 		this.props.resetSearch();
-		this.input.value = "";
+		this.input.value = '';
 		this.setState({ focus: -1, searchActive: false });
+	};
+
+	hoverFocus = index => {
+		this.setState({
+			focus: index
+		});
 	};
 
 	handleTextChange = e => {
 		const text = e.target.value;
 		this.setState({ text: text, searchActive: true });
 
-		if (text === "") {
+		if (text === '') {
 			this.setState({ focus: -1, searchActive: false });
 			this.props.resetSearch();
 		} else {
@@ -88,10 +94,10 @@ class Search extends Component {
 					}
 				}
 				if (correct) {
-					this.setState({ text: "" });
+					this.setState({ text: '' });
 					this.props.resetSearch();
 					this.setState({ focus: -1, searchActive: false });
-					this.input.value = "";
+					this.input.value = '';
 				}
 				break;
 			}
@@ -109,22 +115,22 @@ class Search extends Component {
 	setSearchInactive = () => {
 		this.setState({ focus: -1, searchActive: false });
 		this.props.resetSearch();
-		this.input.value = "";
+		this.input.value = '';
 	};
 
 	render() {
-		const placeHolder = "Search for tracks";
+		const placeHolder = 'Search for tracks';
 		const results = this.props.search.results;
-		var SearchClass = this.state.searchActive ? "active" : "";
+		var SearchClass = this.state.searchActive ? 'active' : '';
 		return (
-			<div className={"Search " + SearchClass}>
+			<div className={'Search ' + SearchClass}>
 				<div className="inputBar">
-					<img id="searchIcon" src={require("../static/imgs/search.svg")} alt="search icon" />
+					<img id="searchIcon" src={require('../static/imgs/search.svg')} alt="search icon" />
 					<input onClick={this.setSearchActive} placeholder={placeHolder} onChange={this.handleTextChange} onKeyDown={this.handleKeyDown} ref={el => (this.input = el)} />
-					{this.state.searchActive && <img id="closeIcon" src={require("../static/imgs/cancel.svg")} alt="close icon" onClick={this.setSearchInactive} />}
+					{this.state.searchActive && <img id="closeIcon" src={require('../static/imgs/cancel.svg')} alt="close icon" onClick={this.setSearchInactive} />}
 					<h3>{this.props.group}</h3>
 				</div>
-				{results && <SearchResults results={results} onSelect={this.selectElement} focus={this.state.focus} />}
+				{results && <SearchResults results={results} onSelect={this.selectElement} focus={this.state.focus} hoverFocus={this.hoverFocus} />}
 			</div>
 		);
 	}

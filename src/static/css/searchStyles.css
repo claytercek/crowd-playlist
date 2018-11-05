@@ -89,8 +89,7 @@
 	animation: fadeIn 0.2s;
 }
 
-.Search li.focused,
-.Search li:hover {
+.Search li.focused {
 	background-color: #939aff22;
 }
 
